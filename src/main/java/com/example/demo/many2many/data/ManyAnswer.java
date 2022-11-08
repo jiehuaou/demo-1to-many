@@ -8,7 +8,7 @@ public class ManyAnswer {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
-    private String answername;
+    private String answerName;
     private String postedBy;
     public int getId() {
         return id;
@@ -17,10 +17,10 @@ public class ManyAnswer {
         this.id = id;
     }
     public String getAnswername() {
-        return answername;
+        return answerName;
     }
     public void setAnswername(String answername) {
-        this.answername = answername;
+        this.answerName = answername;
     }
     public String getPostedBy() {
         return postedBy;
