@@ -1,8 +1,8 @@
-package com.example.demo.many.one2many.runner;
+package com.example.demo.one2many.runner;
 
-import com.example.demo.many.one2many.data.Answer;
-import com.example.demo.many.one2many.data.Question;
-import com.example.demo.many.one2many.svc.MyService;
+import com.example.demo.one2many.data.Answer;
+import com.example.demo.one2many.data.Question;
+import com.example.demo.one2many.svc.MyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

@@ -1,4 +1,4 @@
-package com.example.demo.many.one2many.data;
+package com.example.demo.one2many.data;
 
 import javax.persistence.*;
 

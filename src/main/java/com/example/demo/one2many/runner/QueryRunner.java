@@ -1,7 +1,7 @@
-package com.example.demo.many.one2many.runner;
+package com.example.demo.one2many.runner;
 
-import com.example.demo.many.one2many.data.Question;
-import com.example.demo.many.one2many.svc.MyStore;
+import com.example.demo.one2many.data.Question;
+import com.example.demo.one2many.svc.MyStore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,8 +14,13 @@ import java.util.stream.StreamSupport;
 @Order(2)
 @Component
 public class QueryRunner  implements CommandLineRunner {
-    @Autowired
-    private MyStore myStore;
+
+    private final MyStore myStore;
+
+    public QueryRunner(MyStore myStore) {
+        this.myStore = myStore;
+    }
+
     @Override
     public void run(String... args) throws Exception {
         log.info("runner Query begin ====>");
