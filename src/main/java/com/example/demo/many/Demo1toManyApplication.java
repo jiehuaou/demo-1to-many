@@ -1,4 +1,4 @@
-package com.example.demo.one2many;
+package com.example.demo.many;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
