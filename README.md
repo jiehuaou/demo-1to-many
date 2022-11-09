@@ -1,5 +1,35 @@
 # demo-1to-many
+
 demo JPA, Hibernate, 1-to-many and more
+
+# GenerationType  IDENTITY vs SEQUENCE vs AUTO
+
+## AUTO Generation
+
+If we're using the default generation type, the persistence provider will determine values based on the type of the primary key attribute. This type can be numerical or UUID.
+
+For numeric values, the generation is based on a **Sequence or Table** generator, 
+```java
+ @Id
+    @GeneratedValue
+    private long studentId;
+```
+while UUID values will use the **UUID** Generator.
+```java
+ @Id
+    @GeneratedValue
+    private UUID studentId;
+```
+
+## IDENTITY Generation
+
+**IDENTITY** sequencing uses **special IDENTITY columns** in the database to allow the database to automatically assign an id to the object when its row is inserted. Identity columns are supported in many databases, such as MySQL, DB2, SQL Server, Sybase and Postgres. Oracle does not support IDENTITY columns but they can be simulated through using sequence objects and triggers.
+
+## SEQUENCE Generation
+
+This generator uses **SEQUENCE object** if our database supports them. It switches to table generation if they aren't supported.
+
+In order to customize the sequence name, we can use the @GenericGenerator annotation with SequenceStyleGenerator strategy.
 
 # JPA One To Many example
 
