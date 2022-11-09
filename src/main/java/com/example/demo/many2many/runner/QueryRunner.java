@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Order(4)
-@Component
+@Component("query-Tutorial")
 public class QueryRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {

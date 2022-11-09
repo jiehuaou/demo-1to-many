@@ -12,7 +12,7 @@ import java.util.stream.StreamSupport;
 
 @Slf4j
 @Order(2)
-@Component
+@Component("query-ans")
 public class QueryRunner  implements CommandLineRunner {
 
     private final MyStore myStore;

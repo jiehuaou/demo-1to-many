@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @Slf4j
 @Order(1)
-@Component
+@Component("create-ans")
 public class CreatorRunner implements CommandLineRunner {
 
     @Autowired

@@ -18,8 +18,8 @@ public class Tutorial {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "published")
-    private boolean published;
+//    @Column(name = "published")
+//    private boolean published;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -35,10 +35,10 @@ public class Tutorial {
 
     }
 
-    public Tutorial(String title, String description, boolean published) {
+    public Tutorial(String title, String description) {
         this.title = title;
         this.description = description;
-        this.published = published;
+//        this.published = published;
     }
 
     // getters and setters

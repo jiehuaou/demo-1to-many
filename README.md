@@ -2,6 +2,8 @@
 
 demo JPA, Hibernate, 1-to-many and more
 
+# Overview of JPA/Hibernate Cascade
+
 # GenerationType  IDENTITY vs SEQUENCE vs AUTO
 
 ## AUTO Generation
@@ -49,7 +51,7 @@ Every Many-to-Many relationship has two sides:
 
 In this demo, Tutorial entity is the owner of the relationship and Tag entity is the inverse side.
 
-The join table is specified on the owning side (Tutorial) using @JoinTable annotation. This relationship is bidirectional, the inverse side (Tag) must use the mappedBy element to specify the relationship field or property of the owning side.
+*The **join table** is specified on the **owning side** (Tutorial) using **@JoinTable** annotation. This relationship is bidirectional, the **inverse side** (Tag) must use the **mappedBy** element to specify the **relationship field or property** of the **owning side**.*
 
 So, the side which doesn’t have the **mappedBy** attribute is the owner, the side which has the mappedBy attribute is the inverse side.
 
