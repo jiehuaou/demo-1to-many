@@ -10,6 +10,14 @@ import java.util.Date;
 @Entity
 public class PostDetails {
 
+    public PostDetails() {
+    }
+
+    public PostDetails(Long id, boolean visible) {
+        this.id = id;
+        this.visible = visible;
+    }
+
     @Id
     private Long id;
 
@@ -22,6 +30,8 @@ public class PostDetails {
     @OneToOne
     @MapsId
     private Post post;
+
+
 
     public Long getId() {
         return id;

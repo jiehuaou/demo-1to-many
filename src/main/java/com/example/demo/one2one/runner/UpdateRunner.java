@@ -24,6 +24,7 @@ public class UpdateRunner implements CommandLineRunner {
         log.info("=========== UPDATE post ==========");
         Optional<Post> post = postStore.findById(1L);
         post.ifPresentOrElse(post1 -> {
+            log.info("=========== UPDATE post begin ==========");
             post1.setName("new name");
             post1.getDetails().setVisible(true);
             postService.update(post1);

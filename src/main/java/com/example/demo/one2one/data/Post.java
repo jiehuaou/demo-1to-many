@@ -8,11 +8,43 @@ import javax.persistence.*;
 @Entity
 public class Post {
 
+    public Post() {
+    }
+
+    public Post(Long id, Long version, String name, String owner, PostDetails details) {
+        this.version = version;
+        this.id = id;
+        this.name = name;
+        this.owner = owner;
+        this.details = details;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    @Version
+    private Long version;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    private String owner;
 
     @OneToOne(mappedBy = "post", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
@@ -49,8 +81,10 @@ public class Post {
     @Override
     public String toString() {
         return "Post{" +
-                "id=" + id +
+                "version=" + version +
+                ", id=" + id +
                 ", name='" + name + '\'' +
+                ", owner='" + owner + '\'' +
                 ", details=" + details +
                 '}';
     }
