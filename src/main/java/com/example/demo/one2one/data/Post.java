@@ -1,10 +1,13 @@
 package com.example.demo.one2one.data;
 
+import com.example.demo.one2one.svc.PostEeventListener;
+
 import javax.persistence.*;
 
 /**
  * The Post entity plays the Parent role and the PostDetails is the Child.
  */
+@EntityListeners(PostEeventListener.class)
 @Entity
 public class Post {
 
@@ -34,7 +37,7 @@ public class Post {
     private Long id;
 
     private String name;
-
+    private String owner;
 
     public String getOwner() {
         return owner;
@@ -43,8 +46,6 @@ public class Post {
     public void setOwner(String owner) {
         this.owner = owner;
     }
-
-    private String owner;
 
     @OneToOne(mappedBy = "post", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
