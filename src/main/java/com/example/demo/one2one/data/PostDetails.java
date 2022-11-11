@@ -19,6 +19,7 @@ public class PostDetails {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "created_on")
@@ -27,11 +28,8 @@ public class PostDetails {
 
     private boolean visible;
 
-    @OneToOne
-    @MapsId
+    @OneToOne(mappedBy = "details")  // "mappedBy" means the "foreign key" is in another table
     private Post post;
-
-
 
     public Long getId() {
         return id;

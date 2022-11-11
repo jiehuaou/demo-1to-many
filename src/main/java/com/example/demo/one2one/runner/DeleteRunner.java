@@ -22,10 +22,9 @@ public class DeleteRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.info("=========== Delete post ==========");
-        postStore.deleteById(1L);
+        //postStore.deleteById(1L);
         log.info("=========== Delete post end ==========");
-        postService.findAll()
-                .forEach(p -> log.info("post ==> {}", p.toString()));
+        //postService.findAll().forEach(p -> log.info("post ==> {}", p.toString()));
         log.info("=========== Delete post check ==========");
     }
 }

@@ -6,7 +6,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * The Post entity plays the Parent role and the PostDetails is the Child.
+ * The Post entity plays the Parent role
+ * the PostDetails is the Child.
+ * the Owner is the Child.
  */
 @EntityListeners(PostEeventListener.class)
 @Entity
@@ -15,7 +17,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long id, Long version, String name, String owner, PostDetails details) {
+    public Post(Long id, Long version, String name, Owner owner, PostDetails details) {
         this.version = version;
         this.id = id;
         this.name = name;
@@ -38,7 +40,10 @@ public class Post {
     private Long id;
 
     private String name;
-    private String owner;
+
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)  // "mappedBy" means the "foreign key" is in another table
+    @PrimaryKeyJoinColumn   // Implementing With a Shared Primary Key
+    private Owner owner;
 
     public LocalDateTime getLoadTime() {
         return loadTime;
@@ -51,16 +56,17 @@ public class Post {
     @Transient
     private LocalDateTime loadTime;
 
-    public String getOwner() {
+    public Owner getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(Owner owner) {
         this.owner = owner;
+        owner.setPost(this);
     }
 
-    @OneToOne(mappedBy = "post", fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "detail_id", referencedColumnName = "id")  // impl with a Foreign Key, owns the foreign key column
     private PostDetails details;
 
     public Long getId() {

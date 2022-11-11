@@ -1,5 +1,6 @@
 package com.example.demo.one2one.runner;
 
+import com.example.demo.one2one.data.Owner;
 import com.example.demo.one2one.data.Post;
 import com.example.demo.one2one.data.PostDetails;
 import com.example.demo.one2one.svc.PostService;
@@ -28,7 +29,8 @@ public class DetachedUpdateRunner implements CommandLineRunner {
 
         log.info("=========== UPDATE detached post ==========");
         PostDetails postDetails = new PostDetails(1L, true);
-        Post post = new Post(1L,1L, "other name", "albert 2", postDetails);
+        Owner owner = new Owner(1L, "abc@group.com", "1238888899");
+        Post post = new Post(1L,1L, "other name", owner, postDetails);
 
         log.info("=========== UPDATE detached post begin ==========");
         postService.update(post);
