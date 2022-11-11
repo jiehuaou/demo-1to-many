@@ -3,6 +3,7 @@ package com.example.demo.one2one.data;
 import com.example.demo.one2one.svc.PostEeventListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * The Post entity plays the Parent role and the PostDetails is the Child.
@@ -38,6 +39,17 @@ public class Post {
 
     private String name;
     private String owner;
+
+    public LocalDateTime getLoadTime() {
+        return loadTime;
+    }
+
+    public void setLoadTime(LocalDateTime loadTime) {
+        this.loadTime = loadTime;
+    }
+
+    @Transient
+    private LocalDateTime loadTime;
 
     public String getOwner() {
         return owner;
@@ -82,11 +94,12 @@ public class Post {
     @Override
     public String toString() {
         return "Post{" +
-                "version=" + version +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                ", owner='" + owner + '\'' +
-                ", details=" + details +
+                "version=" + version + "\n" +
+                ", id=" + id + "\n" +
+                ", name='" + name + "\'\n" +
+                ", owner='" + owner + "\'\n" +
+                ", loadTime='" + loadTime + "\'\n" +
+                ", details=" + details + "\n" +
                 '}';
     }
 }

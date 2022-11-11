@@ -4,6 +4,7 @@ import com.example.demo.one2one.data.Post;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * monitor the event of post entity
@@ -19,6 +20,7 @@ public class PostEeventListener {
 
     @PostLoad
     private void afterLoad(Post post) {
+        post.setLoadTime(LocalDateTime.now());
         log.info("[post AUDIT] post loaded from database: " + post.getId());
     }
 }
