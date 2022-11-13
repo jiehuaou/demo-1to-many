@@ -87,3 +87,20 @@ public class Tag {
     private Set<Tutorial> tutorials = new HashSet<>();
 }
 ```
+
+# JPA one-to-one 
+
+implement solution
+
+* Implementing With a Shared Primary Key, Child Table copy PK from Parent
+* impl with a Foreign Key, Parent Table owns the foreign key column
+* Implementing With a Join Table 
+
+Some Notes
+
+* **@PrimaryKeyJoinColumn** , PrimaryKey work as JoinColumn
+* **@JoinColumn(name = "post_id")** , means the foreign key column is defined in this Table
+* **@MapsId**, means PK values will be copied from the Parent entity
+* @OneToOne(**mappedBy = "details"**) , means the "foreign key" is in another table
+
+

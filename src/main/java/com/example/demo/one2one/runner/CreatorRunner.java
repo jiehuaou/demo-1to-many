@@ -1,5 +1,6 @@
 package com.example.demo.one2one.runner;
 
+import com.example.demo.one2one.data.Category;
 import com.example.demo.one2one.data.Owner;
 import com.example.demo.one2one.data.Post;
 import com.example.demo.one2one.data.PostDetails;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.StreamSupport;
 
 @Slf4j
 @Order(5)
@@ -28,6 +27,7 @@ public class CreatorRunner implements CommandLineRunner {
         Post post = new Post();
         post.setName("Hibernate Master Class");
         post.setOwner(new Owner(null, "albert", "123323323"));
+        post.setCategory(new Category(null, "Java"));
         PostDetails details = new PostDetails();
         post.addDetails(details);
         postService.create(post);

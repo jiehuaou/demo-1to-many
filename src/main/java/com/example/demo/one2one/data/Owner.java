@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 /**
  * the Owner is the Child.
+ * Demo to implement with a "Shared Primary Key".
  */
 @Entity
 public class Owner {
@@ -56,7 +57,7 @@ public class Owner {
     }
 
     @OneToOne()
-    @MapsId      // indicates that the primary key values will be copied from the User entity
+    @MapsId      // indicates that the primary key values will be copied from the Parent entity
     @JoinColumn(name = "post_id") // this table owns the foreign key column
     private Post post;
 

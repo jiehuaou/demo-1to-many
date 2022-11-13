@@ -1,5 +1,6 @@
 package com.example.demo.one2one.runner;
 
+import com.example.demo.one2one.data.Category;
 import com.example.demo.one2one.data.Owner;
 import com.example.demo.one2one.data.Post;
 import com.example.demo.one2one.data.PostDetails;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 /**
  * update with detached object
@@ -26,11 +25,12 @@ public class DetachedUpdateRunner implements CommandLineRunner {
     private PostStore postStore;
     @Override
     public void run(String... args) throws Exception {
-
+        // if(true) return;
         log.info("=========== UPDATE detached post ==========");
         PostDetails postDetails = new PostDetails(1L, true);
         Owner owner = new Owner(1L, "abc@group.com", "1238888899");
-        Post post = new Post(1L,1L, "other name", owner, postDetails);
+        Category category = new Category(8L, "Java 11");
+        Post post = new Post(1L,1L, "other Hibernate", owner, postDetails, category);
 
         log.info("=========== UPDATE detached post begin ==========");
         postService.update(post);

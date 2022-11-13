@@ -6,6 +6,7 @@ import java.util.Date;
 
 /**
  * PostDetails is the Child.
+ * here demo to implement with "foreign key" in another table
  */
 @Entity
 public class PostDetails {
@@ -27,6 +28,10 @@ public class PostDetails {
     private Date createdOn = new Date();
 
     private boolean visible;
+
+    public Post getPost() {
+        return post;
+    }
 
     @OneToOne(mappedBy = "details")  // "mappedBy" means the "foreign key" is in another table
     private Post post;
