@@ -2,6 +2,22 @@
 
 demo JPA, Hibernate, 1-to-many and more
 
+# Entity Lifecycle Model in JPA & Hibernate
+
+![JPA info](./images/entity-lifecycle.png "lifecycle-diagram")
+
+**Transient**
+The lifecycle state of a newly instantiated entity object is called transient. The entity hasn’t been persisted yet, so it doesn’t represent any database record.
+
+**Managed**
+All entity objects attached to the current persistence context are in the lifecycle state managed.
+
+**Detached**
+An entity that was previously managed but is no longer attached to the current persistence context is in the lifecycle state detached.
+
+**Removed**
+When you call the remove method on your EntityManager, the mapped database record doesn’t get removed immediately. The entity object only changes its lifecycle state to removed.
+
 # Overview of JPA/Hibernate Cascade
 
 # GenerationType  IDENTITY vs SEQUENCE vs AUTO
@@ -53,7 +69,7 @@ In this demo, Tutorial entity is the owner of the relationship and Tag entity is
 
 *The **join table** is specified on the **owning side** (Tutorial) using **@JoinTable** annotation. This relationship is bidirectional, the **inverse side** (Tag) must use the **mappedBy** element to specify the **relationship field or property** of the **owning side**.*
 
-So, the side which doesn’t have the **mappedBy** attribute is the owner, the side which has the mappedBy attribute is the inverse side.
+So, the side which doesn’t have the **mappedBy** attribute is the owner, the side which has the **mappedBy** attribute is the inverse side.
 
 The owner side is the side which Hibernate looks at to know which association exists. For example, if you add a Tag in the set of tags of a Tutorial, a new row will be inserted by Hibernate in the join table (tutorial_tags). On the contrary, if you add a Tutorial to the set of tutorials of a Tag, nothing will be modified in the database.
 

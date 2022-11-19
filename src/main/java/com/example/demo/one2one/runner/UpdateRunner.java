@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Slf4j
-@Order(6)
+@Order(102)
 @Component("update-post")
 public class UpdateRunner implements CommandLineRunner {
     @Autowired

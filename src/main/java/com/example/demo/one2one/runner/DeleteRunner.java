@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Slf4j
-@Order(8)
+@Order(104)
 @Component("delete-post")
 public class DeleteRunner implements CommandLineRunner {
     @Autowired

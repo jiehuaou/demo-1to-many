@@ -13,7 +13,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Order(5)
+@Order(101)
 @Component("create-post")
 public class CreatorRunner implements CommandLineRunner {
     @Autowired

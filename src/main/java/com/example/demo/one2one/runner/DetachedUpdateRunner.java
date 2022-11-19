@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * update with detached object
  */
 @Slf4j
-@Order(7)
+@Order(103)
 @Component("detached-update-post")
 public class DetachedUpdateRunner implements CommandLineRunner {
     @Autowired

@@ -1,0 +1,48 @@
+package com.example.demo.many2many.runner;
+
+import com.example.demo.many2many.data.Course;
+import com.example.demo.many2many.data.Student;
+import com.example.demo.many2many.svc.CourseStore;
+import com.example.demo.many2many.svc.Many2ManyService;
+import com.example.demo.many2many.svc.StudentStore;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+import java.util.stream.StreamSupport;
+
+@Slf4j
+@Order(14)
+@Component("UpdateStudentCourse")
+public class UpdateRunner implements CommandLineRunner {
+    @Autowired
+    StudentStore studentStore;
+    @Autowired
+    CourseStore courseStore;
+    @Autowired
+    Many2ManyService service;
+    @Override
+    public void run(String... args) throws Exception {
+        log.info("-------- update-course update begin -------------");
+
+        // Joe like AWS
+        Student joe = studentStore.findByTitle("Joe").get(0);
+        Course aws = courseStore.findByName("AWS").get(0);
+        joe.addCourse(aws);
+        service.save(joe);
+
+        // Tiger like Web
+        Student tiger = studentStore.findByTitle("Tiger").get(0);
+        Course web = courseStore.findByName("Web 3.0").get(0);
+        web.addStudent(tiger);
+        service.saveCourse(web);
+
+        log.info("-------- update-course update end -------------");
+//        StreamSupport.stream(courseStore.findAll().spliterator(), false).forEach(e -> log.info(e.toStringWithStudent()));
+        StreamSupport.stream(studentStore.findAll().spliterator(), false)
+                .forEach(e -> log.info(e.toString()));
+        log.info("-------- update-course check  end -------------");
+    }
+}
