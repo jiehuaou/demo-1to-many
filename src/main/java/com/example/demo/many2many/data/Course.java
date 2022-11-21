@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.xml.crypto.dsig.spec.XSLTTransformParameterSpec;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class Course {
     private String name;
 
     @ManyToMany(mappedBy = "likedCourses" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    //@JsonIgnore
+    @JsonIgnore
     private Set<Student> students = new HashSet<>();
 
     public Course() {
@@ -59,10 +60,22 @@ public class Course {
     }
 
     public void removeStudent(Long studentId) {
-        this.students.stream()
+        removeStudent(studentId, true);
+    }
+
+    /**
+     * remove Student by StudentId,
+     * @param studentId
+     * @param configStudent
+     */
+    public void removeStudent(Long studentId, boolean configStudent) {
+        List<Student> removedStudentList = this.students.stream()
                 .filter(e -> e.getId()==studentId)
-                .findFirst()
-                .ifPresent(e -> students.remove(e));
+                .collect(Collectors.toList());
+        students.removeAll(removedStudentList);
+        if(configStudent) {
+            removedStudentList.stream().forEach(e->e.removeCourse(this.getId(), false));
+        }
     }
 
     @Override

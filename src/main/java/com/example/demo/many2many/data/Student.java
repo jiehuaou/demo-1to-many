@@ -2,8 +2,10 @@ package com.example.demo.many2many.data;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "student")
@@ -54,11 +56,16 @@ public class Student  {
     }
 
     public void removeCourse(long courseId) {
-        this.likedCourses.stream()
+        removeCourse(courseId, true);
+    }
+    public void removeCourse(long courseId, boolean configCourse) {
+        List<Course> removedCourseList = this.likedCourses.stream()
                 .filter(t -> t.getId() == courseId)
-                .findFirst()
-                .ifPresent(e->this.likedCourses.remove(e));
-
+                .collect(Collectors.toList());
+        this.likedCourses.removeAll(removedCourseList);
+        if(configCourse) {
+            removedCourseList.stream().forEach(e -> e.removeStudent(this.getId(), false));
+        }
     }
 
 

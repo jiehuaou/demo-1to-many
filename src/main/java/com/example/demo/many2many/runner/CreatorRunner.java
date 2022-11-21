@@ -14,6 +14,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.stream.StreamSupport;
 
+/**
+ * add relation with new student and new course
+ */
 @Slf4j
 @Order(13)
 @Component("CreatorStudentCourse")
