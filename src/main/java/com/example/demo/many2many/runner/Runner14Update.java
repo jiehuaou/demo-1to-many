@@ -30,13 +30,13 @@ public class Runner14Update implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("-------- update-course update begin -------------");
 
-        // Joe like AWS
+        // existing Student "Joe" like existing Course "AWS"
         Student joe = studentStore.findByTitle("Joe").get(0);
         Course aws = courseStore.findByName("AWS").get(0);
         joe.addCourse(aws);
         service.saveStudent(joe);
 
-        // Tiger like Web
+        // existing Student “Tiger” like existing Course “Web”
         Student tiger = studentStore.findByTitle("Tiger").get(0);
         Course web = courseStore.findByName("Web 3.0").get(0);
         web.addStudent(tiger);

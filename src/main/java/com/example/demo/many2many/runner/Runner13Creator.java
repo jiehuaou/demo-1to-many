@@ -32,7 +32,7 @@ public class Runner13Creator implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("-------- many2many creator begin -------------");
 
-//         create student
+//         create student with new Course
         Student john = new Student("John");
         Student lexi = new Student("Lexi");
         Course aws = new Course("AWS");
@@ -54,7 +54,7 @@ public class Runner13Creator implements CommandLineRunner {
         StreamSupport.stream(all.spliterator(), false).forEach(e -> log.info(e.toString()));
         log.info("-------- many2many creator check 1-------------");
 
-        // create new course with student
+        // create new course with new student
         Course nodeJs = new Course("NodeJs");
         Course java=new Course("java");
 
