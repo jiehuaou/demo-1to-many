@@ -12,32 +12,28 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-/**
- * update with detached object
- */
 @Slf4j
-@Order(103)
-@Component("detached-update-post")
-public class DetachedUpdateRunner implements CommandLineRunner {
+@Order(101)
+@Component("create-post")
+public class Runner101Creator implements CommandLineRunner {
     @Autowired
     private PostService postService;
     @Autowired
     private PostStore postStore;
+
     @Override
     public void run(String... args) throws Exception {
-        // if(true) return;
-        log.info("=========== UPDATE detached post ==========");
-        PostDetails postDetails = new PostDetails(1L, true);
-        Owner owner = new Owner(1L, "abc@group.com", "1238888899");
-        Category category = new Category(8L, "Java 11");
-        Post post = new Post(1L,1L, "other Hibernate", owner, postDetails, category);
-
-        log.info("=========== UPDATE detached post begin ==========");
-        postService.update(post);
-
-        log.info("=========== UPDATE detached post end ==========");
+        log.info("=========== create post ==========");
+        Post post = new Post();
+        post.setName("Hibernate Master Class");
+        post.setOwner(new Owner(null, "albert", "123323323"));
+        post.setCategory(new Category(null, "Java"));
+        PostDetails details = new PostDetails();
+        post.addDetails(details);
+        postService.create(post);
+        log.info("=========== create post end ==========");
         postService.findAll()
                 .forEach(p -> log.info("post ==> {}", p.toString()));
-        log.info("=========== UPDATE detached post check ==========");
+        log.info("=========== create post check ==========");
     }
 }

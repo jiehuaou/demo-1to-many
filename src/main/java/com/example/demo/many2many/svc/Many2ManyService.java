@@ -15,7 +15,7 @@ public class Many2ManyService {
     @Autowired
     CourseStore courseStore;
 
-    public Student save(Student student) {
+    public Student saveStudent(Student student) {
         // ...
         return studentStore.save(student);
     }

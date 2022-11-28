@@ -25,7 +25,7 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Order(15)
 @Component("PartialCreateStudentCourse")
-public class PartialCreateRunner implements CommandLineRunner {
+public class Runner15PartialCreate implements CommandLineRunner {
     @Autowired
     StudentStore studentStore;
     @Autowired
@@ -47,7 +47,7 @@ public class PartialCreateRunner implements CommandLineRunner {
         Student lexi = studentStore.findByTitle("Lexi").get(0);
         Course cpp = new Course("C++");
         lexi.addCourse(cpp);
-        service.save(lexi);  // can not save Course here otherwise throw "detached entity passed to persist" Exception
+        service.saveStudent(lexi);  // can not save Course here otherwise throw "detached entity passed to persist" Exception
 
         log.info("-------- Partial-Create-StudentCourse end -------------");
         StreamSupport.stream(studentStore.findAll().spliterator(), false)

@@ -19,7 +19,7 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Order(14)
 @Component("UpdateStudentCourse")
-public class UpdateRunner implements CommandLineRunner {
+public class Runner14Update implements CommandLineRunner {
     @Autowired
     StudentStore studentStore;
     @Autowired
@@ -34,7 +34,7 @@ public class UpdateRunner implements CommandLineRunner {
         Student joe = studentStore.findByTitle("Joe").get(0);
         Course aws = courseStore.findByName("AWS").get(0);
         joe.addCourse(aws);
-        service.save(joe);
+        service.saveStudent(joe);
 
         // Tiger like Web
         Student tiger = studentStore.findByTitle("Tiger").get(0);

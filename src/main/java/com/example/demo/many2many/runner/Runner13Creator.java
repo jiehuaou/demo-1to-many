@@ -20,7 +20,7 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Order(13)
 @Component("CreatorStudentCourse")
-public class CreatorRunner implements CommandLineRunner {
+public class Runner13Creator implements CommandLineRunner {
 
     @Autowired
     private StudentStore studentStore;
@@ -42,12 +42,12 @@ public class CreatorRunner implements CommandLineRunner {
         john.addCourse(web);
         lexi.addCourse(aws);
 
-        many2ManyService.save(john);
-        many2ManyService.save(lexi);
+        many2ManyService.saveStudent(john);
+        many2ManyService.saveStudent(lexi);
 
         // Lexi later on like "Web 3.0"
         lexi.addCourse(web);
-        many2ManyService.save(lexi);
+        many2ManyService.saveStudent(lexi);
 
         log.info("-------- many2many creator end 1-------------");
         Iterable<Student> all = studentStore.findAll();

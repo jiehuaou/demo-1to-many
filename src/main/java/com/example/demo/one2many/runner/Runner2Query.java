@@ -3,7 +3,6 @@ package com.example.demo.one2many.runner;
 import com.example.demo.one2many.data.Question;
 import com.example.demo.one2many.svc.MyStore;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -13,11 +12,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Order(2)
 @Component("query-ans")
-public class QueryRunner  implements CommandLineRunner {
+public class Runner2Query implements CommandLineRunner {
 
     private final MyStore myStore;
 
-    public QueryRunner(MyStore myStore) {
+    public Runner2Query(MyStore myStore) {
         this.myStore = myStore;
     }
 

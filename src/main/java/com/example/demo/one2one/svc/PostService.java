@@ -31,4 +31,9 @@ public class PostService {
         Iterable<Post> all = postStore.findAll();
         return StreamSupport.stream(all.spliterator(), false);
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void changeRelation() {
+
+    }
 }

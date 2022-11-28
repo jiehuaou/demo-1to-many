@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @Slf4j
 @Order(1)
 @Component("create-ans")
-public class CreatorRunner implements CommandLineRunner {
+public class Runner1Creator implements CommandLineRunner {
 
     @Autowired
     private MyService myService;

@@ -14,7 +14,7 @@ import java.util.Optional;
 @Slf4j
 @Order(102)
 @Component("update-post")
-public class UpdateRunner implements CommandLineRunner {
+public class Runner102Update implements CommandLineRunner {
     @Autowired
     private PostService postService;
     @Autowired
