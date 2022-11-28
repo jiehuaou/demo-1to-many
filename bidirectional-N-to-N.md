@@ -53,6 +53,7 @@ either from the parent or from the child side.
 You also need to use add/remove utility methods for bidirectional associations to make sure 
 that both sides are properly synchronized.
 
+
 # MappedBy in bi-directional @ManyToMany : what is the reason
 
 1. What is the reason for setting MappedBy in bidirectional many-to-many relationships?
@@ -118,4 +119,16 @@ you have to ask yourself whether you more commonly change a SideA's list or Side
 owns the relationship then you update the relationship by adding or removing SideB instances from a 
 SideA instance** . but if you had a list of SideA instances for a SideB that you wanted to persist, you 
 would need to iterate through the list and alter each instance of SideA in the list.
+
+# Simple rules of bidirectional relationships:
+
+*Owner is the table with the FK Column.*
+
+1. For **many-to-one** bidirectional relationships, the many side is always the owning side of the relationship. 
+Example: 1 Room has many Person (a Person belongs one Room only) -> owning side is Person (with foreign key)
+
+2. For **one-to-one** bidirectional relationships, the owning side corresponds to the side that contains the 
+corresponding foreign key.
+
+3. For **many-to-many** bidirectional relationships, either side may be the owning side.
 
