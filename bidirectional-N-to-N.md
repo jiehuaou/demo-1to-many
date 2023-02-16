@@ -2,6 +2,7 @@
 
 This is a Unidirectional association
 ```java
+// child side
 public class User {
     private int     id;
     private String  name;
@@ -10,6 +11,7 @@ public class User {
     private Group   group;
 }
 
+// parent side
 public class Group {
     private int     id;
     private String  name;
@@ -19,6 +21,7 @@ public class Group {
 The Bidirectional association
 
 ```java
+// Owner side
 public class User {
     private int     id;
     private String  name;
@@ -26,6 +29,7 @@ public class User {
     @JoinColumn(name = "groupId")
     private Group   group;
 }
+// the Inverse side
 public class Group {
     private int         id;
     private String      name;
@@ -35,17 +39,17 @@ public class Group {
 ```
 If the association is bidirectional, both sides can propagate the entity state changes.
 
-The main differenece is that bidirectional relationship provides navigational access in both 
-directions, so that you can access the other side without explicit queries. Also it allows you 
+The main difference is that bidirectional relationship provides navigational access in both 
+directions, so that you can access the other side without explicit queries. Also, it allows you 
 to apply cascading options to both directions.
 
 For a unidirectional association, you can navigate the association from one end only.
 
 for a unidirectional @ManyToOne association, it means you can only access the relationship 
-from the child side where the foreign key resides.
+from the child side **where the foreign key resides**.
 
 If you have a unidirectional @OneToMany association, it means you can only access the 
-relationship from the parent side which manages the foreign key.
+relationship from the parent side **which manages the foreign key**.
 
 For the bidirectional @OneToMany association, you can navigate the association in both ways, 
 either from the parent or from the child side.
@@ -93,7 +97,7 @@ public class SideA {
 }
 @Entity
 public class SideB {
-    @ManyToMany(mappedBy="sidebs")
+    @ManyToMany(mappedBy="sidebs")  //<-- this is the Inverse side
     Set<SideA> sideas;
 }
 ```
@@ -114,7 +118,7 @@ involved, then you should add a mappedBy="name" on one of them as per the Javado
 redundant join table.
 
 As to which side to make the owning entity, there is no correct answer, it depends on what your system 
-thinks is best. The relationship will only be persisted when entries are put in the owning side so 
+thinks is best. The relationship will only be persisted when entries are put in the owning side, so 
 you have to ask yourself whether you more commonly change a SideA's list or SideB's list. **If SideA 
 owns the relationship then you update the relationship by adding or removing SideB instances from a 
 SideA instance** . but if you had a list of SideA instances for a SideB that you wanted to persist, you 

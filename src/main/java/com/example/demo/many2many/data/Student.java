@@ -7,6 +7,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Student is the Owner side
+ */
 @Entity
 @Table(name = "student")
 public class Student  {

@@ -3,7 +3,7 @@ package com.example.demo.one2one.data;
 import javax.persistence.*;
 
 /**
- * the Catagory is the Child.
+ * the Category is the Child.
  * Demo to implement with a Join Table.
  */
 @Entity

@@ -3,12 +3,14 @@ package com.example.demo.many2many.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.xml.crypto.dsig.spec.XSLTTransformParameterSpec;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Course is the Inverse side
+ */
 @Entity
 @Table()
 public class Course {
