@@ -22,12 +22,13 @@ public class Runner2Query implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("runner Query begin ====>");
+        log.info("runner Question Query begin ====>");
         Iterable<Question> all = myStore.findAll();
+
         StreamSupport.stream(all.spliterator(), false)
-                .peek(q->log.info("Qid --> {}", q.getId()))
+                .peek(q->log.info("Question --> {}", q.toString()))
                 .flatMap(q->q.getAnswers().stream())
-                .forEach(a->log.info(a.toString()));
-        log.info("runner Query end <====  \n");
+                .forEach(a->log.info("Answer --> {}", a.toString()));
+        log.info("runner Question Query end <====  \n");
     }
 }
