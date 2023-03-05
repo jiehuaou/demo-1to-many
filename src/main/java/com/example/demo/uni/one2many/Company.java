@@ -7,6 +7,8 @@ import java.util.List;
 /**
  * unidirectional associations
  *
+ * using only @OneToMany then there will be 3 tables (company, branch and company_branch).
+ *
  * The unidirectional associations are not very efficient when it comes to removing child entities.
  * Hibernate will delete all children then re-insert all others.
  *
