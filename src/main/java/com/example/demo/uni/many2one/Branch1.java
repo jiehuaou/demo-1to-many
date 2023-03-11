@@ -47,7 +47,10 @@ public class Branch1 {
 
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {
+            CascadeType.MERGE
+         //   ,CascadeType.PERSIST
+    })
     private Company1 company1;
 
     @Override

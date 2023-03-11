@@ -31,6 +31,16 @@ public class Branch1Service {
 
     private Integer branchId = null;
 
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
+    private Integer companyId = null;
+
 
     @Transactional(propagation = Propagation.REQUIRED)
     public Integer saveBranch1(Branch1 branch1) {
@@ -62,5 +72,9 @@ public class Branch1Service {
 
     public List<Branch1> queryBranch1() {
         return branch1Store.findAll();
+    }
+
+    public List<Company1> queryCompany1() {
+        return company1Store.findAll();
     }
 }

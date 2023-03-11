@@ -15,8 +15,8 @@ import java.util.List;
  */
 @Slf4j
 @Order(202)
-@Component("delete-company")
-public class CompanyDeleteRunner implements CommandLineRunner {
+@Component("delete1-company1")
+public class CompanyDelete1Runner implements CommandLineRunner {
 
     @Autowired
     private CompanyService companyService;

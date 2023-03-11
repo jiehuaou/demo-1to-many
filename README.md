@@ -120,3 +120,7 @@ Some Notes
 * @OneToOne(**mappedBy = "details"**) , means the "foreign key" is in another table
 
 
+# "detached entity passed to persist" solution
+
+1. only use CascadeType.MERGE instead of CascadeType.PERSIST or CascadeType.ALL
+

@@ -10,6 +10,13 @@ import javax.persistence.*;
  */
 @Entity
 public class Company1 {
+    public Company1() {
+    }
+
+    public Company1(String title) {
+        this.title = title;
+    }
+
     public Integer getCompanyId() {
         return companyId;
     }

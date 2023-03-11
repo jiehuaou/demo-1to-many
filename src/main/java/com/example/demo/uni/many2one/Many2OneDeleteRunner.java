@@ -14,7 +14,7 @@ import java.util.List;
  * then re-insert the ones that are still found in the in-memory persistence context.
  */
 @Slf4j
-@Order(302)
+@Order(309)
 @Component("delete-company1")
 public class Many2OneDeleteRunner implements CommandLineRunner {
 
@@ -26,15 +26,17 @@ public class Many2OneDeleteRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("=========== delete company begin ==========");
+        log.info("=========== delete Branch begin ==========");
 
         Integer branchId = branch1Service.getBranchId();
         branch1Store.findById(branchId).ifPresent(branch1 -> {
             branch1Service.deleteBranch1(branch1);
         });
-        log.info("=========== delete company end ==========");
+        log.info("=========== delete Branch end ==========");
         List<Branch1> branch1List = branch1Service.queryBranch1();
         branch1List.forEach(e -> log.info(e.toString()));
-        log.info("=========== query company end ==========");
+        List<Company1> company1List = branch1Service.queryCompany1();
+        company1List.forEach(e -> log.info(e.toString()));
+        log.info("=========== query Branch end ==========");
     }
 }
