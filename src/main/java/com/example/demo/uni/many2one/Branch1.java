@@ -51,6 +51,7 @@ public class Branch1 {
             CascadeType.MERGE
          //   ,CascadeType.PERSIST
     })
+    @JoinColumn(name = "company2Id")  // specify the foreign key
     private Company1 company1;
 
     @Override

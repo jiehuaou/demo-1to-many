@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * create new Branch1 (ManyToOne) with new company
+ * we must save Company1 first then save branch respectively.
+ */
 @Slf4j
 @Order(301)
 @Component("create-company1")

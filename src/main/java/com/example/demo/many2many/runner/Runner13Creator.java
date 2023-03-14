@@ -15,6 +15,9 @@ import org.springframework.stereotype.Component;
 import java.util.stream.StreamSupport;
 
 /**
+ * Student is the Owner side
+ * Course is the Inverse side
+ *
  * add relation with new student and new course
  */
 @Slf4j

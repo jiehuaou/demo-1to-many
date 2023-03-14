@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * update existing Branch1 (ManyToOne) with existing company
+ * update existing Branch1 (ManyToOne) with another existing company
  */
 
 @Slf4j
