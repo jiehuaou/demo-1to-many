@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * The unidirectional associations are not very efficient when it comes to removing child entities.
+ * The unidirectional @OneToMany associations are not efficient when removing child.
  * In this particular example, Hibernate deletes all database child entries
  * then re-insert the ones that are still found in the in-memory persistence context.
  */

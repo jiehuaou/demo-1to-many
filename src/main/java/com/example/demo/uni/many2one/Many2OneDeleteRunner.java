@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * The unidirectional associations are not very efficient when it comes to removing child entities.
- * In this particular example, Hibernate deletes all database child entries
- * then re-insert the ones that are still found in the in-memory persistence context.
+ * deleting Branch (@ManyToOne and @JoinColumn) is quite simple here, only one SQL
+ *
+ * delete from branch1 where branch_id=?
  */
 @Slf4j
 @Order(309)

@@ -10,18 +10,25 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * create new question (Inverse-side) with new Answer (Owner-side);
+ *
+ * usually save Inverse-side object;
+ *
+ */
 @Slf4j
-@Order(1)
+@Order(1001)
 @Component("create-ans")
-public class Runner1Creator implements CommandLineRunner {
+public class CreateQuestion1Runner implements CommandLineRunner {
 
     @Autowired
     private MyService myService;
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("runner creator begin ====>");
+        log.info("create Question & Answer begin ====>");
 
         Answer ans1=new Answer();
         ans1.setAnswername("Java is a programming language");
@@ -31,6 +38,11 @@ public class Runner1Creator implements CommandLineRunner {
         ans2.setAnswername("Java is a platform");
         ans2.setPostedBy("Sudhir Kumar");
 
+        Question question1=new Question();
+        question1.setQname("What is Java?");
+        question1.addAnswer(ans1);
+        question1.addAnswer(ans2);
+
         Answer ans3=new Answer();
         ans3.setAnswername("Servlet is an Interface");
         ans3.setPostedBy("Jai Kumar");
@@ -39,28 +51,25 @@ public class Runner1Creator implements CommandLineRunner {
         ans4.setAnswername("Servlet is an API");
         ans4.setPostedBy("Arun");
 
-        ArrayList<Answer> list1=new ArrayList<Answer>();
-        list1.add(ans1);
-        list1.add(ans2);
-
-        ArrayList<Answer> list2=new ArrayList<Answer>();
-        list2.add(ans3);
-        list2.add(ans4);
-
-        Question question1=new Question();
-        question1.setQname("What is Java?");
-        question1.setAnswers(list1);
-
         Question question2=new Question();
         question2.setQname("What is Servlet?");
-        question2.setAnswers(list2);
+        question2.addAnswer(ans3);
+        question2.addAnswer(ans4);
 
-        int id1 = myService.create(question1);
-        int id2 = myService.create(question2);
+        int id1 = myService.save(question1);
+        int id2 = myService.save(question2);
 
         log.info(" create Qid {} ", id1);
         log.info(" create Qid {} ", id2);
 
-        log.info("runner creator end <====  \n");
+        log.info("create Question & Answer end <====  \n");
+        log.info("=============================================>");
+        List<Question> all = myService.queryQuestion();
+
+        all.stream()
+                .peek(q->log.info("Question --> {}", q.toString()))
+                .flatMap(q->q.getAnswers().stream())
+                .forEach(a->log.info("Answer --> {}", a.toString()));
+        log.info("runner Question Query end <====  \n");
     }
 }

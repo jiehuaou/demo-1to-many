@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * create new Vehicle with new Person
+ * we must save Person first then save Vehicle ( @ManyToOne).
  */
 @Slf4j
 @Order(401)

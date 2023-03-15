@@ -3,23 +3,37 @@ package com.example.demo.one2many.data;
 import javax.persistence.*;
 
 /**
- * Answer is owning side, with JoinColumn
- * Question is inverse side, with mappedBy
+ * Answer( @ManyToOne ) is owning side (child side), with JoinColumn
+ * Question( @OneToMany ) is inverse side (parent side), with mappedBy
+ *
+ * child side must re-implement equals() and hashCode()
  */
 @Entity
-@Table(name="ans5991")
+@Table(name="Answer_table")
 public class Answer {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
-
-    private int id;
+    private Integer id;
     private String answername;
     private String postedBy;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Answer)) return false;
+        Answer answer = (Answer) o;
+        return getId() != null && getId() == answer.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
     /**
      * ManyToOne must not define mappedBy
      */
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 
@@ -31,10 +45,10 @@ public class Answer {
         this.question = question;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getAnswername() {

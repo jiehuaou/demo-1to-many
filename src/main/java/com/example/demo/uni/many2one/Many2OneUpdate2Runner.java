@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * update existing Branch1 (ManyToOne) with new company
+ * update existing Branch1 (@ManyToOne) with new company
+ *
+ * we must save new Company first then save branch respectively.
+ *
  */
 
 @Slf4j
@@ -28,7 +31,7 @@ public class Many2OneUpdate2Runner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("=========== update company1 begin ==========");
         Company1 company = new Company1("company-2");
-        branch1Service.saveCompany1(company);
+        branch1Service.saveCompany1(company);  // we must save new Company first
 
         branch1Store.findByName("first branch").ifPresent(branch1 -> {
             branch1.setCompany1(company);

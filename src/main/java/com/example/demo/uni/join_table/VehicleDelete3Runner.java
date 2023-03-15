@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * delete existing Person
  *
- *
+ * we must code to delete associated vehicle first .
  */
 
 @Slf4j
@@ -35,6 +35,11 @@ public class VehicleDelete3Runner implements CommandLineRunner {
 
         Optional<Person> person = personStore.findByName("Mark");
         if(person.isPresent()) {
+            /**
+             * internally
+             * we must code to delete associated vehicle (@ManyToOne) first,
+             * then delete Person.
+             */
             personService.deletePerson(person.get());
         }
 

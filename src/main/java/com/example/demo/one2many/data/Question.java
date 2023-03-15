@@ -1,15 +1,16 @@
 package com.example.demo.one2many.data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Answer is owning side, with JoinColumn
- * Question is inverse side, with mappedBy
+ * Answer( @ManyToOne ) is owning side, with JoinColumn
+ * Question( @OneToMany ) is inverse side, with mappedBy
  */
 @Entity
-@Table(name="q5991")
+@Table(name="Question_table")
 public class Question {
 
     @Id
@@ -17,8 +18,11 @@ public class Question {
     private int id;
     private String qname;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="question")
-    private List<Answer> answers;
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+            fetch = FetchType.LAZY,
+            orphanRemoval = true,
+            mappedBy="question")
+    private List<Answer> answers = new ArrayList<>();
     public int getId() {
         return id;
     }
@@ -37,6 +41,16 @@ public class Question {
     public void setAnswers(List<Answer> answers) {
         answers.stream().forEach(e->e.setQuestion(this));
         this.answers = answers;
+    }
+
+    public void addAnswer(Answer answer) {
+        answers.add(answer);
+        answer.setQuestion(this);
+    }
+
+    public void removeComment(Answer answer) {
+        answers.remove(answer);
+        answer.setQuestion(null);
     }
 
 

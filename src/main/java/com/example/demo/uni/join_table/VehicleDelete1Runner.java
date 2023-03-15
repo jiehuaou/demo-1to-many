@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 /**
- * delete existing Vehicle belonging to Person
+ * delete existing Vehicle (@ManyToOne and @JoinTable) belonging to Person
+ *
+ * will need 2 SQL:
  *
  * delete from vehicle_person where vehicle_id=?
  * delete from vehicle where id=?
