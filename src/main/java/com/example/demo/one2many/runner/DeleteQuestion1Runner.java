@@ -15,17 +15,19 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * delete Answer (Owner-side) by removing from collection in Parent object (Inverse-side);
+ * delete Question (Inverse-side) by calling store.delete;
  *
- * usually save Inverse-side object;
+ * first delete child (Answer) 1-by-1 then delete parent (Question)
  *
- * SQL : delete from answer_table where id=?
+ * SQL1 : delete from answer_table where id=?
+ * SQL2 : delete from answer_table where id=?
+ * SQL3 : delete from question_table where id=?
  * 
  */
 @Slf4j
-@Order(1004)
-@Component("delete-ans-1004")
-public class DeleteAnswer1Runner implements CommandLineRunner {
+@Order(1006)
+@Component("delete-quest-1006")
+public class DeleteQuestion1Runner implements CommandLineRunner {
 
     @Autowired
     private MyService myService;
@@ -36,16 +38,14 @@ public class DeleteAnswer1Runner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("delete Answer begin ====>");
+        log.info("delete Question begin ====>");
 
-        Optional<Answer> ans1 = answerStore.findByAnswername("Servlet is an API");
-        if(ans1.isPresent()) {
-            Question question = ans1.get().getQuestion();
-            question.removeAnswer(ans1.get());  // here Hibernate will load all answer, which is not efficient.
-            myService.save(question);
+        Optional<Question> questionOptional = questionStore.findByQname("What is Java?");
+        if(questionOptional.isPresent()) {
+            myService.deleteQuestion(questionOptional.get());  // first delete child (Answer) 1-by-1 then delete parent (Question)
         }
 
-        log.info("delete Answer end <====  \n");
+        log.info("delete Question end <====  \n");
         log.info("=============================================>");
         List<Question> all = myService.queryQuestion();
 

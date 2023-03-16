@@ -18,11 +18,13 @@ import java.util.Optional;
  * move Answer (Owner-side, child) to another question (Inverse-side, Parent) with ;
  *
  * usually save Inverse-side (Parent-side) object;
+ *
+ * sql : update answer_table set answername=?, posted_by=?, question_id=? where id=?
  * 
  */
 @Slf4j
 @Order(1003)
-@Component("create-ans-1003")
+@Component("move-answer-1003")
 public class MoveAnswer1Runner implements CommandLineRunner {
 
     @Autowired

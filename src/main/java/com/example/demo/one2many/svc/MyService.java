@@ -32,10 +32,12 @@ public class MyService {
         return answerStore.findAll();
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteQuestion(Question question) {
         questionStore.delete(question);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteAnswer(Answer answer) {
         answerStore.delete(answer);
     }

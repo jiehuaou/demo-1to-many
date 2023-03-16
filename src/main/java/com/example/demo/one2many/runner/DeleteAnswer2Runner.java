@@ -15,17 +15,15 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * delete Answer (Owner-side) by removing from collection in Parent object (Inverse-side);
- *
- * usually save Inverse-side object;
+ * delete Answer (Owner-side) by calling store.delete;
  *
  * SQL : delete from answer_table where id=?
  * 
  */
 @Slf4j
-@Order(1004)
-@Component("delete-ans-1004")
-public class DeleteAnswer1Runner implements CommandLineRunner {
+@Order(1005)
+@Component("delete-ans-1005")
+public class DeleteAnswer2Runner implements CommandLineRunner {
 
     @Autowired
     private MyService myService;
@@ -38,11 +36,9 @@ public class DeleteAnswer1Runner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("delete Answer begin ====>");
 
-        Optional<Answer> ans1 = answerStore.findByAnswername("Servlet is an API");
+        Optional<Answer> ans1 = answerStore.findByAnswername("Servlet is an Interface");
         if(ans1.isPresent()) {
-            Question question = ans1.get().getQuestion();
-            question.removeAnswer(ans1.get());  // here Hibernate will load all answer, which is not efficient.
-            myService.save(question);
+            myService.deleteAnswer(ans1.get());
         }
 
         log.info("delete Answer end <====  \n");

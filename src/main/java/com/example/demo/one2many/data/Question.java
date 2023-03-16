@@ -48,7 +48,7 @@ public class Question {
         answer.setQuestion(this);
     }
 
-    public void removeComment(Answer answer) {
+    public void removeAnswer(Answer answer) {
         answers.remove(answer);
         answer.setQuestion(null);
     }
