@@ -7,7 +7,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Order(201)
@@ -22,7 +24,7 @@ public class CompanyCreationRunner implements CommandLineRunner {
         log.info("=========== create company begin ==========");
         Company company = new Company();
         company.setName("company");
-        List<Branch> branchs = new ArrayList<>();
+        Set<Branch> branchs = new HashSet<>();
         Branch branch1 = new Branch("first branch");
         Branch branch2 = new Branch("second branch");
         Branch branch3 = new Branch("third branch");

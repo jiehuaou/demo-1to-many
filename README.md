@@ -120,7 +120,53 @@ Some Notes
 * @OneToOne(**mappedBy = "details"**) , means the "foreign key" is in another table
 
 
-# "detached entity passed to persist" solution
+# "Detached entity passed to persist" solution
 
 1. only use CascadeType.MERGE instead of CascadeType.PERSIST or CascadeType.ALL
 
+# Bidirectional parent-child associations
+
+The most common & the most efficient approach is when the **@ManyToOne** side controls the association 
+and the **@OneToMany** end is using the “**mappedBy**” option.
+
+# Set Is Better Than List in @ManyToMany, @OneToMany
+
+**collection is List**
+
+when remove a child branch1, Hibernate delete all branch then re-insert branch2 and branch3 
+```java
+
+@Entity
+public class Company {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Branch> branchList = new ArrayList<>();
+}
+```
+
+**collection is Set**
+
+when remove a child branch1, Hibernate only issue single delete sql "delete * from branch where id=?"
+```java
+
+@Entity
+public class Company {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Branch> branchList = new HashSet<>();
+}
+```
+
+**Preserving the Order of the ResultSet**
+
+* Use @OrderBy to ask the database to order the fetched data by the given columns,
+* Use @OrderColumn to permanently order this via an extra column
+
+Behind the scenes, Hibernate will preserve the order via a **LinkedHashSet**.
+
+```java
+@Entity
+public class Company {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("name DESC")
+    private Set<Branch> branchList = new HashSet<>();
+}
+```

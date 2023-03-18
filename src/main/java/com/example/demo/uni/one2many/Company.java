@@ -2,7 +2,9 @@ package com.example.demo.uni.one2many;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * unidirectional associations
@@ -26,7 +28,9 @@ public class Company {
 
     @OneToMany(targetEntity=Branch.class,cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Branch> branch = new ArrayList<>();
+
+    private Set<Branch> branchList = new HashSet<>();
+    //private List<Branch> branchList = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -44,12 +48,17 @@ public class Company {
         this.name = name;
     }
 
-    public List<Branch> getBranch() {
-        return branch;
+    public Set<Branch> getBranch() {
+        return branchList;
     }
 
-    public void setBranch(List<Branch> branch) {
-        this.branch = branch;
+    public void removeBranch(Branch branch) {
+        branchList.remove(branch);
+    }
+
+    public void setBranch(Set<Branch> branch) {
+        this.branchList = branch;
+        System.out.println(branchList);
     }
 
     @Override
@@ -57,7 +66,7 @@ public class Company {
         return "Company{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", branch=" + branch +
+                ", branch=" + branchList +
                 '}';
     }
 }

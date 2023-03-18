@@ -7,35 +7,37 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
- * delete child from Parent ( @OneToMany side ),
+ * delete child via JPA repository directly,
  *
- * The unidirectional @OneToMany associations are not efficient when removing child.
- * In this particular example, Hibernate deletes all database child entries
- * then re-insert the ones that are still found in the in-memory persistence context.
  */
 @Slf4j
-@Order(202)
-@Component("delete1-company1-202")
-public class CompanyDelete1Runner implements CommandLineRunner {
+@Order(203)
+@Component("delete1-company1-203")
+public class CompanyDelete2Runner implements CommandLineRunner {
 
     @Autowired
     private CompanyService companyService;
     @Autowired
     private CompanyStore companyStore;
+    @Autowired
+    private BranchStore branchStore;
 
 
     @Override
     public void run(String... args) throws Exception {
         log.info("=========== delete company begin ==========");
 
-        Integer companyId = companyService.getCompanyId();
-        companyStore.findById(companyId).ifPresent(company -> {
-            Branch branch1 = company.getBranch().iterator().next();
-            //company.getBranch().remove(branch1);    // Hibernate delete all branch then re-insert branch2 and branch3 when collection is List.
-            company.removeBranch(branch1);
-            companyService.save(company);
+        Optional<Branch> optionalBranch = branchStore.findByName("third branch");
+        optionalBranch.ifPresent(branch -> {
+            // should show Integrity Violation here,
+            try {
+                companyService.deleteBranch(branch);
+            } catch (Exception ex) {
+                log.info("Data Integrity Violation Exception");
+            }
         });
         log.info("=========== delete company end ==========");
         List<Company> companyList = companyService.queryCompany();

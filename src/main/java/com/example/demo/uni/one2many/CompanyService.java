@@ -1,5 +1,6 @@
 package com.example.demo.uni.one2many;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,7 +9,10 @@ import java.util.List;
 
 @Service
 public class CompanyService {
-     private final CompanyStore companyStore;
+    @Autowired
+    private CompanyStore companyStore;
+    @Autowired
+    private BranchStore branchStore;
 
     public Integer getCompanyId() {
         return companyId;
@@ -20,8 +24,8 @@ public class CompanyService {
 
     private Integer companyId = null;
 
-    public CompanyService(CompanyStore companyStore) {
-        this.companyStore = companyStore;
+    public CompanyService() {
+        //
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -30,8 +34,13 @@ public class CompanyService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(Company company) {
+    public void deleteCompany(Company company) {
         companyStore.delete(company);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteBranch(Branch branch) {
+        branchStore.delete(branch);
     }
 
     public List<Company> queryCompany() {

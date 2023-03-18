@@ -1,6 +1,7 @@
 package com.example.demo.uni.one2many;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * unidirectional associations
@@ -25,6 +26,21 @@ public class Branch {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Branch)) return false;
+        Branch branch = (Branch) o;
+        return getId()!=null && getId()==branch.getId();
     }
 
     @Id
