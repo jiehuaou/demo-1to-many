@@ -252,3 +252,39 @@ companyService.save(company);
 // only one SQL is executed when deleting child entity
 // delete from branch where id=?
 ```
+
+Note: 
+
+* child entity should implement the *equals and hashCode* methods
+* parent entity should provide two utility methods (e.g. addComment and removeComment) which are used to synchronize both sides of the bidirectional association.
+
+# @ManyToOne might be just enough
+
+Just because you have the option of using the @OneToMany annotation, 
+it does not mean this should be the default option for every one-to-many 
+database relationship. **The problem with @OneToMany is that we can only use them 
+when *the number of child records is rather limited***.
+
+Therefore, most of the time, the **@ManyToOne** annotation on the child side is 
+**everything you need**. But then, how do you get the child entities associated 
+with a Post entity?
+
+Well, all you need is just a single JPQL query:
+```java
+select pc.id AS id1_1_,
+       pc.post_id AS post_id3_1_,
+       pc.review AS review2_1_
+    from post_comment pc 
+    where  pc.post_id = 1
+```
+
+The **@ManyToOne** association is the **most natural and also efficient** way of mapping 
+one-to-many database relationship.
+```html
+https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/
+```
+
+If we just use @ManyToOne then how to delete Parent Entity?
+
+> CustomPostRepository, which overrides the delete method and issues a bulk delete against the children. 
+> That’s a very efficient option.
