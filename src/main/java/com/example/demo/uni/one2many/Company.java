@@ -1,10 +1,7 @@
 package com.example.demo.uni.one2many;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * unidirectional associations
@@ -28,8 +25,8 @@ public class Company {
 
     @OneToMany(targetEntity=Branch.class,cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, orphanRemoval = true)
-
-    private Set<Branch> branchList = new HashSet<>();
+    @JoinColumn(name = "company_id")
+    private Set<Branch> branchList = new LinkedHashSet<>();
     //private List<Branch> branchList = new ArrayList<>();
 
     public Integer getId() {
@@ -55,9 +52,12 @@ public class Company {
     public void removeBranch(Branch branch) {
         branchList.remove(branch);
     }
+    public void addBranch(Branch branch) {
+        branchList.add(branch);
+    }
 
     public void setBranch(Set<Branch> branch) {
-        this.branchList = branch;
+        this.branchList = new LinkedHashSet(branch);
         System.out.println(branchList);
     }
 

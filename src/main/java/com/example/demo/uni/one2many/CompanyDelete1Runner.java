@@ -34,7 +34,7 @@ public class CompanyDelete1Runner implements CommandLineRunner {
         companyStore.findById(companyId).ifPresent(company -> {
             Branch branch1 = company.getBranch().iterator().next();
             //company.getBranch().remove(branch1);    // Hibernate delete all branch then re-insert branch2 and branch3 when collection is List.
-            company.removeBranch(branch1);
+            company.removeBranch(branch1);            // first update ref_id to null, then delete
             companyService.save(company);
         });
         log.info("=========== delete company end ==========");

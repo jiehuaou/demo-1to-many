@@ -129,11 +129,11 @@ Some Notes
 The most common & the most efficient approach is when the **@ManyToOne** side controls the association 
 and the **@OneToMany** end is using the “**mappedBy**” option.
 
-# Set Is Better Than List in @ManyToMany, @OneToMany
+# Set Is Better Than List in unidirectional @ManyToMany, @OneToMany
 
 **collection is List**
 
-when remove a child branch1, Hibernate delete all branch then re-insert branch2 and branch3 
+when remove a child branch1, Hibernate delete all branch then re-insert branch2 and branch3 in context
 ```java
 
 @Entity
@@ -167,6 +167,88 @@ Behind the scenes, Hibernate will preserve the order via a **LinkedHashSet**.
 public class Company {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("name DESC")
-    private Set<Branch> branchList = new HashSet<>();
+    private Set<Branch> branchList = new LinkedHashSet<>();
 }
+```
+
+# Problem with one-to-many
+
+in reality, **@OneToMany** is practical only when the number of child records is rather limited.
+>Maybe **@OneToFew** would have been a more suggestive name for this annotation.
+
+#  Bidirectional @OneToMany is more efficient than Unidirectional @OneToMany
+
+### Unidirectional @OneToMany
+```java
+@Entity
+public class Company {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "company_id")
+    private Set<Branch> branchList = new HashSet<>();
+    public void addBranch(Branch branch) {
+        branchList.add(branch);
+    }
+}
+
+@Entity
+public class Branch {
+    // ...
+}
+```
+```java
+// add Branch
+company.addBranch(branch1);
+companyService.save(company);
+
+// 2 SQL: first insert then update, which is not efficient
+
+// insert into branch (name, id) values (?, ?)
+// update branch set company_id=? where id=?
+```
+```java
+// remove Branch
+company.removeBranch(branch1);
+companyService.save(company);
+
+// 2 SQL: first update ref_id null then delete, which is not efficient
+
+// update branch set company_id=null where company_id=? and id=?
+// delete from branch where id=?
+```
+
+
+### Bidirectional @OneToMany
+
+```java
+@Entity
+public class Company {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="company")
+    private Set<Branch> branchList = new HashSet<>();
+    public void addBranch(Branch branch) {
+        branchList.add(branch);
+    }
+}
+
+@Entity
+public class Branch {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    private Company company;
+}
+```
+```java
+// add Branch
+company.addBranch(branch1);
+companyService.save(company);
+
+// only one SQL is executed when adding child entity
+// insert into branch (name, company_id, id) values (?, ?, ?)
+```
+```java
+// remove Branch
+company.removeBranch(branch1);
+companyService.save(company);
+
+// only one SQL is executed when deleting child entity
+// delete from branch where id=?
 ```

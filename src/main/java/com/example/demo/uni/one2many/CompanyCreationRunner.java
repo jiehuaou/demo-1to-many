@@ -31,7 +31,9 @@ public class CompanyCreationRunner implements CommandLineRunner {
         branchs.add(branch1);
         branchs.add(branch2);
         branchs.add(branch3);
-        company.setBranch(branchs);
+        company.addBranch(branch1);
+        company.addBranch(branch2);
+        company.addBranch(branch3);
         Integer id = companyService.save(company);
         companyService.setCompanyId(id);
         log.info("=========== create company end with compantId {} ==========", id);

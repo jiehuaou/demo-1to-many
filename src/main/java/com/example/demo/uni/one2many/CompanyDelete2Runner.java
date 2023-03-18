@@ -32,11 +32,11 @@ public class CompanyDelete2Runner implements CommandLineRunner {
 
         Optional<Branch> optionalBranch = branchStore.findByName("third branch");
         optionalBranch.ifPresent(branch -> {
-            // should show Integrity Violation here,
+            // should show Integrity Violation here, when using join_table
             try {
                 companyService.deleteBranch(branch);
             } catch (Exception ex) {
-                log.info("Data Integrity Violation Exception");
+                log.info("Data Integrity Violation when using join_table");
             }
         });
         log.info("=========== delete company end ==========");
