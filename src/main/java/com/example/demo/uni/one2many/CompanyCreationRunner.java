@@ -24,16 +24,19 @@ public class CompanyCreationRunner implements CommandLineRunner {
         log.info("=========== create company begin ==========");
         Company company = new Company();
         company.setName("company");
-        Set<Branch> branchs = new HashSet<>();
-        Branch branch1 = new Branch("first branch");
-        Branch branch2 = new Branch("second branch");
-        Branch branch3 = new Branch("third branch");
-        branchs.add(branch1);
-        branchs.add(branch2);
-        branchs.add(branch3);
+        //Set<Branch> branchs = new HashSet<>();
+        SetBranch branch1 = new SetBranch("first branch");
+        SetBranch branch2 = new SetBranch("second branch");
+        SetBranch branch3 = new SetBranch("third branch");
+
         company.addBranch(branch1);
         company.addBranch(branch2);
         company.addBranch(branch3);
+
+        company.addListBranch(new ListBranch("first other"));
+        company.addListBranch(new ListBranch("second other"));
+        company.addListBranch(new ListBranch("third other"));
+
         Integer id = companyService.save(company);
         companyService.setCompanyId(id);
         log.info("=========== create company end with compantId {} ==========", id);

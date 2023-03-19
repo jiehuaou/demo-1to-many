@@ -10,7 +10,7 @@ import java.util.Objects;
  * branch is child,
  */
 @Entity
-public class Branch {
+public class SetBranch {
 
     public Integer getId() {
         return id;
@@ -38,8 +38,8 @@ public class Branch {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Branch)) return false;
-        Branch branch = (Branch) o;
+        if (!(o instanceof SetBranch)) return false;
+        SetBranch branch = (SetBranch) o;
         return getId()!=null && getId()==branch.getId();
     }
 
@@ -49,10 +49,10 @@ public class Branch {
 
     private String name;
 
-    public Branch() {
+    public SetBranch() {
     }
 
-    public Branch(String name) {
+    public SetBranch(String name) {
         this.name = name;
     }
 

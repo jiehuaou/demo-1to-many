@@ -129,30 +129,39 @@ Some Notes
 The most common & the most efficient approach is when the **@ManyToOne** side controls the association 
 and the **@OneToMany** end is using the “**mappedBy**” option.
 
-# Set Is Better Than List in unidirectional @ManyToMany, @OneToMany
+# Set Is Better Than List in unidirectional @ManyToMany, @OneToMany with join_table
 
 **collection is List**
 
-when remove a child branch1, Hibernate delete all branch then re-insert branch2 and branch3 in context
+when remove a child branch1, Hibernate delete all branch then re-insert branch2 and branch3 in JoinTable
 ```java
 
 @Entity
 public class Company {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "company_list_branch")
     private List<Branch> branchList = new ArrayList<>();
 }
+
+// runtime sql : delete all then insert other again in join table 
+// delete from company_list_branch where company_id=?
+// insert into company_list_branch (company_id, other_branch_list_id) values (?, ?)
 ```
 
 **collection is Set**
 
-when remove a child branch1, Hibernate only issue single delete sql "delete * from branch where id=?"
+when remove a child branch1, Hibernate only issue single delete sql "delete * from JoinTable where id=?"
 ```java
 
 @Entity
 public class Company {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "company_set_branch")
     private Set<Branch> branchList = new HashSet<>();
 }
+
+// runtime SQL : simply delete from join table
+// delete from company_set_branch where company_id=? and branch_list_id=?
 ```
 
 **Preserving the Order of the ResultSet**

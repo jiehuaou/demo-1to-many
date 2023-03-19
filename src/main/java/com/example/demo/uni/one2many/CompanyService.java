@@ -12,7 +12,7 @@ public class CompanyService {
     @Autowired
     private CompanyStore companyStore;
     @Autowired
-    private BranchStore branchStore;
+    private SetBranchStore branchStore;
 
     public Integer getCompanyId() {
         return companyId;
@@ -39,7 +39,7 @@ public class CompanyService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteBranch(Branch branch) {
+    public void deleteBranch(SetBranch branch) {
         branchStore.delete(branch);
     }
 

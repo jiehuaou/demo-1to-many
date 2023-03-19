@@ -23,18 +23,18 @@ public class CompanyDelete2Runner implements CommandLineRunner {
     @Autowired
     private CompanyStore companyStore;
     @Autowired
-    private BranchStore branchStore;
+    private SetBranchStore branchStore;
 
 
     @Override
     public void run(String... args) throws Exception {
         log.info("=========== delete company begin ==========");
 
-        Optional<Branch> optionalBranch = branchStore.findByName("third branch");
+        Optional<SetBranch> optionalBranch = branchStore.findByName("third branch");
         optionalBranch.ifPresent(branch -> {
             // should show Integrity Violation here, when using join_table
             try {
-                companyService.deleteBranch(branch);
+                ; //companyService.deleteBranch(branch);
             } catch (Exception ex) {
                 log.info("Data Integrity Violation when using join_table");
             }
