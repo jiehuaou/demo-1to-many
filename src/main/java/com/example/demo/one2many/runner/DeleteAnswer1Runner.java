@@ -3,7 +3,7 @@ package com.example.demo.one2many.runner;
 import com.example.demo.one2many.data.Answer;
 import com.example.demo.one2many.data.Question;
 import com.example.demo.one2many.svc.AnswerStore;
-import com.example.demo.one2many.svc.MyService;
+import com.example.demo.one2many.svc.QAService;
 import com.example.demo.one2many.svc.QuestionStore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import java.util.Optional;
 public class DeleteAnswer1Runner implements CommandLineRunner {
 
     @Autowired
-    private MyService myService;
+    private QAService QAService;
     @Autowired
     private QuestionStore questionStore;
     @Autowired
@@ -42,12 +42,12 @@ public class DeleteAnswer1Runner implements CommandLineRunner {
         if(ans1.isPresent()) {
             Question question = ans1.get().getQuestion();
             question.removeAnswer(ans1.get());  // here Hibernate will load all answer, which is not efficient.
-            myService.save(question);
+            QAService.save(question);
         }
 
         log.info("delete Answer end <====  \n");
         log.info("=============================================>");
-        List<Question> all = myService.queryQuestion();
+        List<Question> all = QAService.queryQuestion();
 
         all.stream()
                 .peek(q->log.info("Question --> {}", q.toString()))

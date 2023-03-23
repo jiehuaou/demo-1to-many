@@ -2,7 +2,7 @@ package com.example.demo.one2many.runner;
 
 import com.example.demo.one2many.data.Answer;
 import com.example.demo.one2many.data.Question;
-import com.example.demo.one2many.svc.MyService;
+import com.example.demo.one2many.svc.QAService;
 import com.example.demo.one2many.svc.QuestionStore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * create new Answer (Owner-side) to existing question (Inverse-side) with ;
@@ -25,7 +24,7 @@ import java.util.Optional;
 public class CreateAnswer1Runner implements CommandLineRunner {
 
     @Autowired
-    private MyService myService;
+    private QAService QAService;
     @Autowired
     private QuestionStore questionStore;
 
@@ -39,13 +38,13 @@ public class CreateAnswer1Runner implements CommandLineRunner {
 
         questionStore.findByQname("What is Java?").ifPresent(question -> {
             question.addAnswer(ans1);
-            myService.save(question);
+            QAService.save(question);
             log.info(" save question {} ", question.toString());
         });
 
         log.info("create new Answer end <====  \n");
         log.info("=============================================>");
-        List<Question> all = myService.queryQuestion();
+        List<Question> all = QAService.queryQuestion();
 
         all.stream()
                 .peek(q->log.info("Question --> {}", q.toString()))

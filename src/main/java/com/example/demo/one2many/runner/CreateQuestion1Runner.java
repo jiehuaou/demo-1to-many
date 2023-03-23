@@ -2,14 +2,13 @@ package com.example.demo.one2many.runner;
 
 import com.example.demo.one2many.data.Answer;
 import com.example.demo.one2many.data.Question;
-import com.example.demo.one2many.svc.MyService;
+import com.example.demo.one2many.svc.QAService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ import java.util.List;
 public class CreateQuestion1Runner implements CommandLineRunner {
 
     @Autowired
-    private MyService myService;
+    private QAService QAService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -56,15 +55,15 @@ public class CreateQuestion1Runner implements CommandLineRunner {
         question2.addAnswer(ans3);
         question2.addAnswer(ans4);
 
-        int id1 = myService.save(question1);
-        int id2 = myService.save(question2);
+        int id1 = QAService.save(question1);
+        int id2 = QAService.save(question2);
 
         log.info(" create Qid {} ", id1);
         log.info(" create Qid {} ", id2);
 
         log.info("create Question & Answer end <====  \n");
         log.info("=============================================>");
-        List<Question> all = myService.queryQuestion();
+        List<Question> all = QAService.queryQuestion();
 
         all.stream()
                 .peek(q->log.info("Question --> {}", q.toString()))

@@ -10,11 +10,11 @@ import java.util.List;
 
 
 @Service
-public class MyService {
+public class QAService {
     private final QuestionStore questionStore;
     private final AnswerStore answerStore;
 
-    public MyService(QuestionStore myStore, AnswerStore answerStore) {
+    public QAService(QuestionStore myStore, AnswerStore answerStore) {
         this.questionStore = myStore;
         this.answerStore = answerStore;
     }

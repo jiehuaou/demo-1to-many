@@ -3,7 +3,7 @@ package com.example.demo.one2many.runner;
 import com.example.demo.one2many.data.Answer;
 import com.example.demo.one2many.data.Question;
 import com.example.demo.one2many.svc.AnswerStore;
-import com.example.demo.one2many.svc.MyService;
+import com.example.demo.one2many.svc.QAService;
 import com.example.demo.one2many.svc.QuestionStore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import java.util.Optional;
 public class MoveAnswer1Runner implements CommandLineRunner {
 
     @Autowired
-    private MyService myService;
+    private QAService QAService;
     @Autowired
     private QuestionStore questionStore;
     @Autowired
@@ -43,12 +43,12 @@ public class MoveAnswer1Runner implements CommandLineRunner {
         if(ans1.isPresent() && quest.isPresent()) {
             ans1.get().setAnswername("Java Servlet is very nice");
             quest.get().addAnswer(ans1.get());
-            myService.save(quest.get());
+            QAService.save(quest.get());
         }
 
         log.info("move Answer end <====  \n");
         log.info("=============================================>");
-        List<Question> all = myService.queryQuestion();
+        List<Question> all = QAService.queryQuestion();
 
         all.stream()
                 .peek(q->log.info("Question --> {}", q.toString()))
