@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query(nativeQuery = true)
-    List<CustomerTypeDTO> totalCustomersByType();
+    List<CustomerTypeCount> totalCustomersByType();
+
+    @Query(nativeQuery = true)
+    List<Object[]> totalCustomersByType2();
 }

@@ -12,19 +12,41 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Data
-@SqlResultSetMapping(
-        name="customerTypeMapping",
-        classes = @ConstructorResult(
-                targetClass = CustomerTypeDTO.class,
-                columns = {
-                        @ColumnResult(name = "customer_type", type = String.class),
-                        @ColumnResult(name = "count", type = long.class)
-                }))
-@NamedNativeQuery(name = "Customer.totalCustomersByType",
-        resultClass = CustomerTypeDTO.class,
-        resultSetMapping ="customerTypeMapping",
-        query = "SELECT c.customer_type, COUNT(c.customer_type) AS count FROM Customer AS c GROUP BY c.customer_type"
-)
+
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "Customer.totalCustomersByType",
+                resultClass = CustomerTypeCount.class,
+                resultSetMapping ="customerTypeMapping",
+                query = "SELECT c.customer_type, COUNT(c.customer_type) AS count FROM Customer AS c GROUP BY c.customer_type"
+        ),
+        @NamedNativeQuery(name = "Customer.totalCustomersByType2",
+                resultClass = Object[].class,
+                resultSetMapping ="MultiplePojoMapping",
+                query = "SELECT c.customer_type, COUNT(c.customer_type) AS customer_count FROM Customer AS c GROUP BY c.customer_type"
+        )
+})
+
+@SqlResultSetMappings({
+        @SqlResultSetMapping(
+                name="customerTypeMapping",
+                classes = @ConstructorResult(
+                        targetClass = CustomerTypeCount.class,
+                        columns = {
+                                @ColumnResult(name = "customer_type", type = String.class),
+                                @ColumnResult(name = "count", type = Long.class)
+                        })),
+        @SqlResultSetMapping(
+                name = "MultiplePojoMapping",
+                classes = {
+                        @ConstructorResult(targetClass = CustomerType.class, columns = @ColumnResult(name="customer_type", type = String.class)),
+                        @ConstructorResult(targetClass = CustomerCount.class, columns = @ColumnResult(name="customer_count", type = Long.class))
+                }
+        )
+})
+
+
+
+
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

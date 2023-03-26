@@ -31,7 +31,12 @@ public class CustomerService {
 
     }
 
-    public List<CustomerTypeDTO> totalCustomersByType() {
+    public List<CustomerTypeCount> totalCustomersByType() {
         return customerRepository.totalCustomersByType();
     }
+
+//    public List<Object[]> totalCustomersByType2() {
+//        return customerRepository.totalCustomersByType2();
+////        return null;
+//    }
 }

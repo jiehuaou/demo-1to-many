@@ -7,11 +7,11 @@ import lombok.Data;
  * this is non-entity class
  */
 @Data
-public class CustomerTypeDTO {
+public class CustomerTypeCount {
     private String customerType;
     private Long count;
 
-    public CustomerTypeDTO(String customerType, Long count) {
+    public CustomerTypeCount(String customerType, Long count) {
         this.customerType = customerType;
         this.count = count;
     }

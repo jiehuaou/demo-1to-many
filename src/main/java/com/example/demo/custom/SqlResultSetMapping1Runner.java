@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
+/**
+ * demo : get list of single Pojo from Repository query.
+ */
 @Slf4j
 @Order(501)
 @Component("sql-result-map1-runner")
