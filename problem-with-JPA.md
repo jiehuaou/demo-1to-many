@@ -1,6 +1,7 @@
 
-navigational access is not always good, especially for 
-"**one-to-very-many" and "many-to-very-many**" relationships. Imagine a Group that 
+## Bidirectional navigational access is not always good, 
+
+especially for "**one-to-very-many" and "many-to-very-many**" relationships. Imagine a Group that 
 contains thousands of Users:
 
 * How would you access them? With so many Users, you usually need to apply some filtering and/or 
@@ -15,8 +16,8 @@ keep objects in memory consistent, you also need to add User to Group.users. But
 make Hibernate to fetch all elements of Group.users from the database!
 
 
-## unidirectional associations 
+## Unidirectional associations 
 
-unidirectional associations are very efficient when it comes to removing child,
+unidirectional associations with join-table are **not efficient** when it comes to removing child,
 Hibernate will delete all children then re-insert the others one by one.
 

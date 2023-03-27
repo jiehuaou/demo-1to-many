@@ -204,8 +204,8 @@ public class Branch {
     // ...
 }
 ```
+// add Branch Entity
 ```java
-// add Branch
 company.addBranch(branch1);
 companyService.save(company);
 
@@ -214,8 +214,8 @@ companyService.save(company);
 // insert into branch (name, id) values (?, ?)
 // update branch set company_id=? where id=?
 ```
+// remove Branch Entity
 ```java
-// remove Branch
 company.removeBranch(branch1);
 companyService.save(company);
 
@@ -245,16 +245,16 @@ public class Branch {
     private Company company;
 }
 ```
+// add Branch Entity
 ```java
-// add Branch
 company.addBranch(branch1);
 companyService.save(company);
 
 // only one SQL is executed when adding child entity
 // insert into branch (name, company_id, id) values (?, ?, ?)
 ```
+// remove Branch Entity
 ```java
-// remove Branch
 company.removeBranch(branch1);
 companyService.save(company);
 
@@ -295,5 +295,6 @@ https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-an
 
 If we just use @ManyToOne then how to delete Parent Entity?
 
-> CustomPostRepository, which overrides the delete method and issues a bulk delete against the children. 
+> Customize Repository, which overrides the delete method and issues a bulk delete against the children. 
 > That’s a very efficient option.
+
