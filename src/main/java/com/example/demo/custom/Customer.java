@@ -7,42 +7,50 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 /**
- *  demo to map the result of the queries into entities or objects
+ *  demo to map the SQL result into entities or objects
  */
 @Entity
 @NoArgsConstructor
 @Data
 
-@NamedNativeQueries({
+//@NamedNativeQueries({
         @NamedNativeQuery(name = "Customer.totalCustomersByType",
                 resultClass = CustomerTypeCount.class,
-                resultSetMapping ="customerTypeMapping",
-                query = "SELECT c.customer_type, COUNT(c.customer_type) AS count FROM Customer AS c GROUP BY c.customer_type"
-        ),
+                resultSetMapping ="SinglePojoMapping",
+                query = "SELECT c.customer_type, COUNT(c.customer_type) AS customer_count FROM Customer AS c GROUP BY c.customer_type"
+        )
+
+/**
+ * this Named query can be called by EntityManager, but failed to be called by JPA Repository Custom-Method
+ */
         @NamedNativeQuery(name = "Customer.totalCustomersByType2",
-                resultClass = Object[].class,
+                resultClass =  Object[].class ,
                 resultSetMapping ="MultiplePojoMapping",
                 query = "SELECT c.customer_type, COUNT(c.customer_type) AS customer_count FROM Customer AS c GROUP BY c.customer_type"
         )
-})
 
-@SqlResultSetMappings({
+
+//@SqlResultSetMappings({
         @SqlResultSetMapping(
-                name="customerTypeMapping",
+                name="SinglePojoMapping",
                 classes = @ConstructorResult(
                         targetClass = CustomerTypeCount.class,
                         columns = {
                                 @ColumnResult(name = "customer_type", type = String.class),
-                                @ColumnResult(name = "count", type = Long.class)
-                        })),
+                                @ColumnResult(name = "customer_count", type = Long.class)
+                        }))
         @SqlResultSetMapping(
                 name = "MultiplePojoMapping",
                 classes = {
-                        @ConstructorResult(targetClass = CustomerType.class, columns = @ColumnResult(name="customer_type", type = String.class)),
-                        @ConstructorResult(targetClass = CustomerCount.class, columns = @ColumnResult(name="customer_count", type = Long.class))
+                        @ConstructorResult(
+                                targetClass = CustomerType.class,
+                                columns = @ColumnResult(name="customer_type", type = String.class)),
+                        @ConstructorResult(
+                                targetClass = CustomerCount.class,
+                                columns = @ColumnResult(name="customer_count", type = Long.class))
                 }
         )
-})
+
 
 
 

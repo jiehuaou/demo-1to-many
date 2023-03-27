@@ -30,9 +30,17 @@ public class SqlResultSetMapping2Runner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("================== sql-result-map 2 begin ==================");
 
-//        customerRepository.totalCustomersByType2()
-//                .stream()
-//                .forEach(arr -> log.info("{} ---> ", arr));
+        try{
+            // Cannot create TypedQuery for query with more than one return
+
+            customerRepository.totalCustomersByType2()
+                    .stream()
+                    .forEach(arr -> log.info("{} ---> {}", arr[0], arr[1]));
+        } catch (Exception ex) {
+            log.info("", ex);
+        }
+
+
 
         log.info("================== sql-result-map 2 end ==================");
     }
