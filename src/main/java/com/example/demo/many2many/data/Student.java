@@ -18,6 +18,9 @@ public class Student  {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(name = "age")
+    private Integer age = null;
+
     @Column(name = "title")
     private String title;
 
@@ -27,7 +30,7 @@ public class Student  {
 //    @Column(name = "published")
 //    private boolean published;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "course_like",
             joinColumns = @JoinColumn(name = "student_id"),
@@ -41,6 +44,12 @@ public class Student  {
     public Student (String title) {
         this.title = title;
         //this.description = description;
+//        this.published = published;
+    }
+
+    public Student (String title, Integer age) {
+        this.title = title;
+        this.age = age;
 //        this.published = published;
     }
 
@@ -71,14 +80,16 @@ public class Student  {
         }
     }
 
-
+    private String toStringAge(Integer actual) {
+        return actual==null? "Unknown" : actual.toString();
+    }
     @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
+        return "  Student{" +
+                "  id=" + id +
                 ", title='" + title + '\'' +
-              //  ", description='" + description + '\'' +
-                ", likedCourses=" + likedCourses +
+                ", age=" + toStringAge(age) +
+                ", \n likedCourses=" + likedCourses +
                 '}';
     }
 

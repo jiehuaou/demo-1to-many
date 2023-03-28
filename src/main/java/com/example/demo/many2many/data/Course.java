@@ -22,7 +22,7 @@ public class Course {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "likedCourses" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "likedCourses" , cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Student> students = new HashSet<>();
 

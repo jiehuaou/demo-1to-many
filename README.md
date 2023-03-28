@@ -298,3 +298,64 @@ If we just use @ManyToOne then how to delete Parent Entity?
 > Customize Repository, which overrides the delete method and issues a bulk delete against the children. 
 > That’s a very efficient option.
 
+# Using an @EntityGraph annotation
+
+An entity graph is a JPA feature that enables you to define which associations your persistence provider
+shall initialize when fetching an entity from the database.
+
+```java
+@Entity
+public class Course {
+    ...
+}
+@Entity
+public class Student  {
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private Set<Course> likedCourses = new HashSet<>();
+    ...
+}
+
+public interface StudentStore extends CrudRepository<Student, Integer> {
+    @EntityGraph(attributePaths = "likedCourses")
+    public List<Student> findByTitle(String name);
+}
+```
+Using **@EntityGraph(attributePaths = "...")** will fetch association in one query.
+
+# Query Projection
+
+```java
+public interface StudentStore extends JpaRepository<Student, Integer> {
+    // projection with Interface
+    @Query("select s.age, s.title from Student s")
+    public List<StudentView> findAllView();
+
+    // projection with DTO object
+    @Query("select new com.example.demo.many2many.data.StudentDTO(s.age, s.title) from Student s")
+    public List<StudentDTO> findAllDto();
+}
+```
+
+projection with Interface
+```java
+public interface StudentView {
+    Integer getAge() ;
+    String getTitle();
+}
+////
+List<StudentView> studentViews = studentStore.findAllView();
+```
+
+projection with DTO object
+```java
+public class StudentDTO {
+    private Integer age = null;
+    private String title;
+    public StudentDTO(Integer age, String title) {
+        this.age = age;
+        this.title = title;
+    }
+}
+///
+List<StudentDTO> studentDTOS =  studentStore.findAllDto();
+```

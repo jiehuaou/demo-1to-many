@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 /**
@@ -37,7 +38,7 @@ public class Runner13Creator implements CommandLineRunner {
 
 //         create student with new Course
         Student john = new Student("John");
-        Student lexi = new Student("Lexi");
+        Student lexi = new Student("Lexi", 30);
         Course aws = new Course("AWS");
         Course web = new Course("Web 3.0");
 
@@ -53,15 +54,15 @@ public class Runner13Creator implements CommandLineRunner {
         many2ManyService.saveStudent(lexi);
 
         log.info("-------- many2many creator end 1-------------");
-        Iterable<Student> all = studentStore.findAll();
-        StreamSupport.stream(all.spliterator(), false).forEach(e -> log.info(e.toString()));
+        List<Student> all = studentStore.findAll();
+        all.forEach(e -> log.info(e.toString()));
         log.info("-------- many2many creator check 1-------------");
 
         // create new course with new student
         Course nodeJs = new Course("NodeJs");
         Course java=new Course("java");
 
-        Student joe=new Student("Joe");
+        Student joe=new Student("Joe", 40);
         Student tiger=new Student("Tiger");
 
         nodeJs.addStudent(joe);
