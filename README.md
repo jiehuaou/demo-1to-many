@@ -366,3 +366,68 @@ List<StudentDTO> studentDTOS =  studentStore.findAllDto();
 
 DTO projection is Faster than Interface projection;
 
+**return Complex nested DTO via ResultTransformer**
+
+create the Result Transformer
+```java
+public class StudentDTOResultTransformer implements org.hibernate.transform.ResultTransformer {
+    private final static int INDEX_AGE = 0;
+    private final static int INDEX_TITLE = 1;
+    private final static int INDEX_NAME = 2;
+    private Map<String, StudentDTO> data = new LinkedHashMap<>(); // suppose Title is unique as the key
+    @Override
+    public Object transformTuple(Object[] tuple, String[] aliases) {
+        Objects.requireNonNull(tuple[INDEX_TITLE]);
+        // return DTO if existed or else create new one. 
+        StudentDTO studentDTO = data.computeIfAbsent((String) tuple[INDEX_TITLE], 
+                x->new StudentDTO((Integer) tuple[INDEX_AGE], (String) tuple[INDEX_TITLE]));
+        // then add the nested DTO
+        studentDTO.addCourse(new CourseDTO((String) tuple[INDEX_NAME]));
+        return studentDTO;
+    }
+
+    @Override
+    public List transformList(List collection) {
+        // return the nested DTO list
+        return  new ArrayList(data.values());
+    }
+}
+```
+
+
+define and impl custom interface
+```java
+public interface StudentRepo {
+    // projection with Complex DTO object,
+    public List<StudentDTO> findComplexStudentDTO();
+}
+// impl the custom interface
+public class StudentRepoImpl implements StudentRepo{
+    private final String sql = "select a.age as age, a.title as title, b.name as name from ... ";
+    @PersistenceContext
+    private EntityManager entityManager;
+    @Override
+    public List<StudentDTO> findComplexStudentDTO() {
+        return entityManager.createNativeQuery(sql)
+                .unwrap(org.hibernate.query.Query.class)
+                .setResultTransformer(new StudentDTOResultTransformer())
+                .getResultList();
+    }
+}
+
+```
+extends custom interface
+```java
+public interface StudentStore extends JpaRepository<Student, Integer>, StudentRepo { ... };
+```
+call the custom function
+```java
+List<StudentDTO> complexStudentDTOS =  studentStore.findComplexStudentDTO();
+```
+
+the end result is DTO with nested DTO.
+```shell
+ StudentDTO{age=30, title='Lexi', likedCourses='[CourseDTO{name='AWS'}, CourseDTO{name='Web 3.0'}, CourseDTO{name='C++'}]'}
+ StudentDTO{age=null, title='Tiger', likedCourses='[CourseDTO{name='java'}, CourseDTO{name='NodeJs'}, CourseDTO{name='Web 3.0'}]'}
+ StudentDTO{age=40, title='Joe', likedCourses='[CourseDTO{name='java'}, CourseDTO{name='NodeJs'}, CourseDTO{name='AWS'}]'}
+```
