@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * Course is the Inverse side
  */
 @Entity
-@Table()
+@Table(name = "course")
 public class Course {
 
     @Id

@@ -32,6 +32,7 @@ public class SqlResultSetMapping2Runner implements CommandLineRunner {
 
         try{
             // Cannot create TypedQuery for query with more than one return
+            // will raise IllegalArgumentException here !!!
 
             customerRepository.totalCustomersByType2()
                     .stream()
@@ -39,8 +40,6 @@ public class SqlResultSetMapping2Runner implements CommandLineRunner {
         } catch (Exception ex) {
             log.info("", ex);
         }
-
-
 
         log.info("================== sql-result-map 2 end ==================");
     }

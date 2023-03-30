@@ -1,6 +1,6 @@
 package com.example.demo.many2many.data;
 
-import javax.persistence.Column;
+import java.util.*;
 
 public class StudentDTO {
     public Integer getAge() {
@@ -21,10 +21,19 @@ public class StudentDTO {
 
     private Integer age = null;
     private String title;
+    private List<CourseDTO> likedCourses = new ArrayList<>();
 
     public StudentDTO(Integer age, String title) {
         this.age = age;
         this.title = title;
+    }
+
+    public void setLikedCourses(List<CourseDTO> likedCourses) {
+        this.likedCourses.addAll(likedCourses);
+    }
+
+    public void addCourse(CourseDTO courseDTO) {
+        this.likedCourses.add(courseDTO);
     }
 
     @Override
@@ -32,6 +41,20 @@ public class StudentDTO {
         return "StudentDTO{" +
                 "age=" + age +
                 ", title='" + title + '\'' +
+                ", likedCourses='" + likedCourses + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof StudentDTO)) return false;
+        StudentDTO that = (StudentDTO) o;
+        return Objects.equals(getTitle(), that.getTitle());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass());
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.StreamSupport;
 
 /**
@@ -35,6 +36,11 @@ public class Runner19QueryStudent implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("-------- find student with like course begin -------------");
 
+        Integer a = null;
+        Integer b = null;
+        boolean ret = Objects.equals(a, b);
+        System.out.println("a==b? --> " + ret);
+
         List<Student> students = studentStore.findByTitle("Lexi");
         students.stream()
                 .forEach(e -> log.info("{}", e.toString()));
@@ -46,8 +52,13 @@ public class Runner19QueryStudent implements CommandLineRunner {
                 .forEach(e -> log.info("{}", this.text(e)));
 
         log.info("-------- find student DTO Projection -------------");
-        List<StudentDTO> studentDTOS =  studentStore.findAllDto();
+        List<StudentDTO> studentDTOS =  studentStore.findAllStudentDTO();
         studentDTOS.stream()
+                .forEach(e -> log.info("{}", e.toString()));
+
+        log.info("-------- find complex student DTO Projection -------------");
+        List<StudentDTO> complexStudentDTOS =  studentStore.findComplexStudentDTO();
+        complexStudentDTOS.stream()
                 .forEach(e -> log.info("{}", e.toString()));
 
         log.info("-------- find student with like course end -------------");

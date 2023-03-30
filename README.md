@@ -336,7 +336,7 @@ public interface StudentStore extends JpaRepository<Student, Integer> {
 }
 ```
 
-projection with Interface
+**projection with Interface**
 ```java
 public interface StudentView {
     Integer getAge() ;
@@ -345,8 +345,12 @@ public interface StudentView {
 ////
 List<StudentView> studentViews = studentStore.findAllView();
 ```
+Interface Projection is auto mapped with field name, 
 
-projection with DTO object
+but a downside to using the Proxy projection. We cannot provide a specific implementation 
+for equals and hashCode, and this limits its usability.
+
+**projection with DTO object**
 ```java
 public class StudentDTO {
     private Integer age = null;
@@ -359,3 +363,6 @@ public class StudentDTO {
 ///
 List<StudentDTO> studentDTOS =  studentStore.findAllDto();
 ```
+
+DTO projection is Faster than Interface projection;
+
