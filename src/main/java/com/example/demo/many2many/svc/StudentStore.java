@@ -11,7 +11,7 @@ import org.springframework.data.repository.Repository;
 
 import java.util.List;
 
-public interface StudentStore extends JpaRepository<Student, Integer>, StudentRepo {
+public interface StudentStore extends JpaRepository<Student, Integer>, ComplexStudentRepository {
 
     // specify which association will be fetched in this query
     @EntityGraph(attributePaths = "likedCourses")

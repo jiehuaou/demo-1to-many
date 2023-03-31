@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-public class StudentRepoImpl implements StudentRepo{
+public class StudentRepoImpl implements ComplexStudentRepository{
 
     private final String sql = "select a.age as age, a.title as title, b.name as name from student a " +
             "left outer join course_like c on a.id=c.student_id " +
