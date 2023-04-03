@@ -11,10 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
@@ -45,21 +48,21 @@ public class Runner19QueryStudent implements CommandLineRunner {
         students.stream()
                 .forEach(e -> log.info("{}", e.toString()));
 
-        log.info("-------- find student View Projection -------------");
+        log.info("-------- find student View (interface) Projection -------------");
 
         List<StudentView> studentViews = studentStore.findAllView();
-        studentViews.stream()
-                .forEach(e -> log.info("{}", this.text(e)));
+        studentViews.stream().forEach(e -> log.info("{}", this.text(e)));
 
-        log.info("-------- find student DTO Projection -------------");
+        log.info("-------- find simple student DTO Projection -------------");
         List<StudentDTO> studentDTOS =  studentStore.findAllStudentDTO();
-        studentDTOS.stream()
-                .forEach(e -> log.info("{}", e.toString()));
+        studentDTOS.stream().forEach(e -> log.info("{}", e.toString()));
 
         log.info("-------- find complex student DTO Projection -------------");
         List<StudentDTO> complexStudentDTOS =  studentStore.findComplexStudentDTO();
-        complexStudentDTOS.stream()
-                .forEach(e -> log.info("{}", e.toString()));
+        complexStudentDTOS.stream().forEach(e -> log.info("{}", e.toString()));
+
+        log.info("-------- find student as stream -------------");
+        service.getStudentStream(e -> log.info("{}", e.toString()));
 
         log.info("-------- find student with like course end -------------");
 

@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface ComplexStudentRepository {
     // projection with Complex DTO object,
-    public List<StudentDTO> findComplexStudentDTO();
+    List<StudentDTO> findComplexStudentDTO();
 }

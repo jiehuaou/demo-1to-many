@@ -50,7 +50,7 @@ public class StudentDTO {
         if (this == o) return true;
         if (!(o instanceof StudentDTO)) return false;
         StudentDTO that = (StudentDTO) o;
-        return Objects.equals(getTitle(), that.getTitle());
+        return Objects.equals(getTitle(), that.getTitle());  // suppose Title is Unique for each Student.
     }
 
     @Override

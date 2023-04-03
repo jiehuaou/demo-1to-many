@@ -89,7 +89,7 @@ public class Student  {
                 "  id=" + id +
                 ", title='" + title + '\'' +
                 ", age=" + toStringAge(age) +
-                ", \n likedCourses=" + likedCourses +
+                ", likedCourses=" + likedCourses +
                 '}';
     }
 

@@ -3,13 +3,19 @@ package com.example.demo.many2many.svc;
 import com.example.demo.many2many.data.Student;
 import com.example.demo.many2many.data.StudentDTO;
 import com.example.demo.many2many.data.StudentView;
+import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
+import java.util.stream.Stream;
+
 
 public interface StudentStore extends JpaRepository<Student, Integer>, ComplexStudentRepository {
 
@@ -25,5 +31,8 @@ public interface StudentStore extends JpaRepository<Student, Integer>, ComplexSt
     @Query("select new com.example.demo.many2many.data.StudentDTO(s.age, s.title) from Student s")
     public List<StudentDTO> findAllStudentDTO();
 
-    //List<Student> findAll();
+    // returning Entity Stream, it must be executed within @Transaction
+    @EntityGraph(attributePaths = "likedCourses")
+    @Query("select s from Student s")
+    Stream<Student> findAllAsStream();
 }
