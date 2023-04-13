@@ -4,8 +4,8 @@ package com.example.demo.update;
 
 import org.springframework.stereotype.Component;
 
-@Component
-public class VersionDynamicUpdateMapperImpl implements VersionDynamicUpdateMapper{
+//@Component
+public class VersionDynamicUpdateMapperImplex implements VersionDynamicUpdateMapper{
     //private final ModelMapper modelMapper;
 
 //    public VersionDynamicUpdateMapperImpl(ModelMapper modelMapper) {

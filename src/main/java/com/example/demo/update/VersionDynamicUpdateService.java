@@ -8,8 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class VersionDynamicUpdateService {
 
-    @Autowired
-    VersionDynamicUpdateMapper versionDynamicUpdateMapper;
+
     @Autowired
     private VersionDynamicUpdateStore versionDynamicUpdateStore;
 
@@ -18,11 +17,12 @@ public class VersionDynamicUpdateService {
         return versionDynamicUpdateStore.save(versionDynamicUpdateObject).getId();
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public Long saveDTO(VersionDynamicUpdateDTO versionDynamicUpdateDTO) {
-        VersionDynamicUpdateObject versionDynamicUpdateObject = versionDynamicUpdateStore.getById(versionDynamicUpdateDTO.getId());
-        return versionDynamicUpdateStore.save(versionDynamicUpdateMapper.mapToObject(versionDynamicUpdateObject, versionDynamicUpdateDTO)).getId();
-    }
+//    @Transactional(propagation = Propagation.REQUIRED)
+//    public Long saveDTO(VersionDynamicUpdateDTO versionDynamicUpdateDTO) {
+//        VersionDynamicUpdateObject versionDynamicUpdateObject = versionDynamicUpdateStore.getById(versionDynamicUpdateDTO.getId());
+//        versionDynamicUpdateObject = versionDynamicUpdateMapper.mapToObject(versionDynamicUpdateObject, versionDynamicUpdateDTO);
+//        return versionDynamicUpdateStore.save(versionDynamicUpdateObject).getId();
+//    }
 
 
 }

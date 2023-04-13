@@ -15,6 +15,9 @@ public class VersionDynamicUpdateRunner implements CommandLineRunner {
     VersionDynamicUpdateService versionDynamicUpdateService;
 
     @Autowired
+    VersionDynamicUpdateMapper versionDynamicUpdateMapper;
+
+    @Autowired
     private VersionDynamicUpdateStore versionDynamicUpdateStore;
 
     @Override
@@ -23,14 +26,26 @@ public class VersionDynamicUpdateRunner implements CommandLineRunner {
         VersionDynamicUpdateObject o1 = new VersionDynamicUpdateObject("abc1", "data1");
         Long id = versionDynamicUpdateService.save(o1);
 
+        // update  name=?, version=?
         VersionDynamicUpdateDTO d1 = VersionDynamicUpdateDTO.builder().Id(id).name("abc2").build();
-        versionDynamicUpdateService.saveDTO(d1);
+        VersionDynamicUpdateObject v1 = versionDynamicUpdateStore.getOne(id);
+        log.info("getById ==> {}", v1);
+        v1 = versionDynamicUpdateMapper.mapToObject(v1, d1);
+        versionDynamicUpdateService.save(v1);
 
+        // update  data=?, name=?, version=?
         VersionDynamicUpdateDTO d2 = VersionDynamicUpdateDTO.builder().Id(id).name("name3").data("data3").build();
-        versionDynamicUpdateService.saveDTO(d2);
+        VersionDynamicUpdateObject v2 = versionDynamicUpdateStore.getById(id);
+        log.info("getById ==> {}", v2);
+        v2 = versionDynamicUpdateMapper.mapToObject(v2, d2);
+        versionDynamicUpdateService.save(v2);
 
+        // update  name=?, version=? since "data" property value is not changed, actually.
         VersionDynamicUpdateDTO d3 = VersionDynamicUpdateDTO.builder().Id(id).name("name4").data("data3").build();
-        versionDynamicUpdateService.saveDTO(d3);
+        VersionDynamicUpdateObject v3 = versionDynamicUpdateStore.getById(id);
+        log.info("getById ==> {}", v3);
+        v3 = versionDynamicUpdateMapper.mapToObject(v3, d3);
+        versionDynamicUpdateService.save(v3);
 
         log.info("================== Version-DynamicUpdate601-Runner end ==================");
     }

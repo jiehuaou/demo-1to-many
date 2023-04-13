@@ -4,7 +4,9 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
-
+/**
+ * demo : use @DynamicUpdate to partially update JPA data
+ */
 @Entity
 @DynamicUpdate
 public class VersionDynamicUpdateObject {
@@ -59,5 +61,15 @@ public class VersionDynamicUpdateObject {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "VersionDynamicUpdateObject{" +
+                "Id=" + Id +
+                ", version=" + version +
+                ", name='" + name + '\'' +
+                ", data='" + data + '\'' +
+                '}';
     }
 }
