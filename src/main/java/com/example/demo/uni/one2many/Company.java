@@ -26,7 +26,7 @@ public class Company {
     @OneToMany(targetEntity=SetBranch.class,cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinTable(name = "company_set_branch")
-    private Set<SetBranch> branchList = new LinkedHashSet<>();   // use Set
+    private Set<SetBranch> branchSet = new LinkedHashSet<>();   // use Set
 
 
     @OneToMany(targetEntity=ListBranch.class,cascade = CascadeType.ALL,
@@ -52,21 +52,21 @@ public class Company {
 
 
 
-    public void removeBranch(SetBranch branch) {
-        branchList.remove(branch);
+    public void removeBranchFromSet(SetBranch branch) {
+        branchSet.remove(branch);
     }
     public void addBranch(SetBranch branch) {
-        branchList.add(branch);
+        branchSet.add(branch);
     }
 
     public Set<SetBranch> getBranch() {
-        return branchList;
+        return branchSet;
     }
     public void setBranch(Set<SetBranch> branch) {
-        this.branchList = new LinkedHashSet(branch);
-        System.out.println(branchList);
+        this.branchSet = new LinkedHashSet(branch);
+        System.out.println(branchSet);
     }
-    public void removeListBranch(ListBranch otherBranch) {
+    public void removeBranchFromList(ListBranch otherBranch) {
         otherBranchList.remove(otherBranch);
     }
     public void addListBranch(ListBranch otherBranch) {
@@ -88,7 +88,7 @@ public class Company {
         return "Company{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", \n   setBranchList=" + branchList +
+                ", \n   setBranchList=" + branchSet +
                 ", \n   otherBranchList=" + otherBranchList +
                 '}';
     }
