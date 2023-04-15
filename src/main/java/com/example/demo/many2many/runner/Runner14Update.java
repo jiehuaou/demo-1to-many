@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 /**
@@ -31,13 +32,16 @@ public class Runner14Update implements CommandLineRunner {
         log.info("-------- update-course update begin -------------");
 
         // existing Student "Joe" like existing Course "AWS"
-        Student joe = studentStore.findByTitle("Joe").get(0);
-        Course aws = courseStore.findByName("AWS").get(0);
-        joe.addCourse(aws);
-        service.saveStudent(joe);
+        Optional<Student> joe = studentStore.findFirstByTitle("Joe");
+        joe.ifPresent(e->{
+            Course aws = courseStore.findByName("AWS").get(0);
+            e.addCourse(aws);
+            service.saveStudent(e);
+        });
+
 
         // existing Student “Tiger” like existing Course “Web”
-        Student tiger = studentStore.findByTitle("Tiger").get(0);
+        Student tiger = studentStore.findTop1ByTitle("Tiger");
         Course web = courseStore.findByName("Web 3.0").get(0);
         web.addStudent(tiger);
         service.saveCourse(web);

@@ -14,12 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 
 public interface StudentStore extends JpaRepository<Student, Integer>, ComplexStudentRepository {
 
     // specify which association will be fetched in this query
+    @EntityGraph(attributePaths = "likedCourses")
+    public Student findTop1ByTitle(String name);
+
+    @EntityGraph(attributePaths = "likedCourses")
+    public Optional<Student> findFirstByTitle(String name);
+
     @EntityGraph(attributePaths = "likedCourses")
     public List<Student> findByTitle(String name);
 

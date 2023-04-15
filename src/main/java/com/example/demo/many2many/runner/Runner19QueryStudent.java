@@ -61,6 +61,11 @@ public class Runner19QueryStudent implements CommandLineRunner {
         List<StudentDTO> complexStudentDTOS =  studentStore.findComplexStudentDTO();
         complexStudentDTOS.stream().forEach(e -> log.info("{}", e.toString()));
 
+        System.out.println("-------------");
+        List<StudentDTO> complexStudentDTOS2 =  studentStore.findComplexStudentDTO2();
+        complexStudentDTOS2.stream().forEach(e -> log.info("{}", e.toString()));
+
+
         log.info("-------- find student as stream -------------");
         service.getStudentStream(e -> log.info("{}", e.toString()));
 

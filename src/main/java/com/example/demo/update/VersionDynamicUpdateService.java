@@ -13,8 +13,8 @@ public class VersionDynamicUpdateService {
     private VersionDynamicUpdateStore versionDynamicUpdateStore;
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public Long save(VersionDynamicUpdateObject versionDynamicUpdateObject) {
-        return versionDynamicUpdateStore.save(versionDynamicUpdateObject).getId();
+    public VersionDynamicUpdateObject save(VersionDynamicUpdateObject versionDynamicUpdateObject) {
+        return versionDynamicUpdateStore.save(versionDynamicUpdateObject);
     }
 
 //    @Transactional(propagation = Propagation.REQUIRED)
