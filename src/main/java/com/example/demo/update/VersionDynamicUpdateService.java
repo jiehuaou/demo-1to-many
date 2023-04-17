@@ -5,10 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @Service
 public class VersionDynamicUpdateService {
 
-
+    @PersistenceContext
+    private EntityManager entityManager;
     @Autowired
     private VersionDynamicUpdateStore versionDynamicUpdateStore;
 
@@ -17,12 +21,16 @@ public class VersionDynamicUpdateService {
         return versionDynamicUpdateStore.save(versionDynamicUpdateObject);
     }
 
-//    @Transactional(propagation = Propagation.REQUIRED)
-//    public Long saveDTO(VersionDynamicUpdateDTO versionDynamicUpdateDTO) {
-//        VersionDynamicUpdateObject versionDynamicUpdateObject = versionDynamicUpdateStore.getById(versionDynamicUpdateDTO.getId());
-//        versionDynamicUpdateObject = versionDynamicUpdateMapper.mapToObject(versionDynamicUpdateObject, versionDynamicUpdateDTO);
-//        return versionDynamicUpdateStore.save(versionDynamicUpdateObject).getId();
-//    }
+    /**
+     * use reference, should only update modified fields
+     * update  set data=?, version=?
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public VersionDynamicUpdateObject onlyChangeDataField(Long id, String data) {
+        VersionDynamicUpdateObject vo = entityManager.getReference(VersionDynamicUpdateObject.class, id);
+        vo.setData(data);
+        return versionDynamicUpdateStore.save(vo);
+    }
 
 
 }

@@ -431,3 +431,14 @@ the end result is DTO with nested DTO.
  StudentDTO{age=null, title='Tiger', likedCourses='[CourseDTO{name='java'}, CourseDTO{name='NodeJs'}, CourseDTO{name='Web 3.0'}]'}
  StudentDTO{age=40, title='Joe', likedCourses='[CourseDTO{name='java'}, CourseDTO{name='NodeJs'}, CourseDTO{name='AWS'}]'}
 ```
+
+# Use Reference
+
+* EM.getReference() is Equivalent to JPA.getOne( @Deprecated ) and JPA.getById()
+> they all return proxy whose state will be fetched only when non-PK fields are accessed.
+
+* JPA.findByXXX always call database then return the real entity.
+
+In case of setup association, you benefit from not fetching the referenced entity from the database. 
+This improves the performance of your application by reducing the number of executed queries 
+and the memory footprint of your persistence context.
