@@ -442,3 +442,53 @@ the end result is DTO with nested DTO.
 In case of setup association, you benefit from not fetching the referenced entity from the database. 
 This improves the performance of your application by reducing the number of executed queries 
 and the memory footprint of your persistence context.
+
+# Locking - Optimistic
+
+When your application uses long transactions or conversations that span several database transactions, 
+you can store versioning data so that if the same entity is updated by two conversations, the last to 
+commit changes is informed of the conflict, and does not override the other conversation’s work. This 
+approach guarantees some isolation, but scales well and works particularly well in read-often-write-sometimes 
+situations.
+
+```java
+@Entity
+public static class Person {
+	@Version
+	private long version;
+}
+```
+
+Jakarta Persistence defines support for optimistic locking based on either a version (Integer, Long) 
+or timestamp (java.sql.Timestamp)
+
+# Locking - Pessimistic
+
+Usually you need to obtain exclusive pessimistic locks or re-obtain locks at the start of a new transaction.
+
+> Hibernate always uses the locking mechanism of the database, and never lock objects in memory.
+
+# PersistentObjectException: detached entity passed to persist
+
+When fetching an entity within a transaction, you get a managed entity back, 
+and fetching it again in the same transaction will give you the same object in return.
+
+If you, cross the transaction boundary, the entity will become detached, associate it to a transient entity
+, save the transient entity, this issue will arise.
+
+**Solution** : within a transaction, fetch the entity, make changes, and commit the transaction.
+
+# IllegalStateException: Multiple representations of the same entity
+
+When fetching an entity within a transaction, you get a managed entity back,
+and fetching it again in the same transaction will give you the same object in return.
+
+If you on the other hand cross a transaction boundary, the entity will become detached, 
+and if you start a new transaction and fetch the same entity again, you will actually get a different object. 
+
+Then, if you try to re-introduce the detached entity (using merge), Hibernate will complain 
+since it will have two objects for the same entity, and it can't know which of them contains the 
+correct state to write to the database.
+
+**Solution** : within a transaction, fetch the entity, make changes, and commit the transaction.
+

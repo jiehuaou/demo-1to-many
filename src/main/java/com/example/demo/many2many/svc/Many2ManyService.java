@@ -19,6 +19,7 @@ public class Many2ManyService {
     @Autowired
     CourseStore courseStore;
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public Student saveStudent(Student student) {
         // ...
         return studentStore.save(student);
@@ -30,8 +31,44 @@ public class Many2ManyService {
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public Course saveCourse(Course course) {
         return courseStore.save(course);
+    }
+
+    /**
+     * save(new Student), associate Course1 save(Course1), associate Course2 save(Course2)
+     *
+     * put all entity inside one transaction , to avoid:
+     * exception "Multiple representations of the same entity"
+     * exception "detached entity passed to persist"
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addMultipleCourseFromCourse(Student newStudent, String course1, String course2) {
+        Student bob = studentStore.save(newStudent);
+        Course c1 = courseStore.findFirstByName(course1);
+        c1.addStudent(bob);
+        courseStore.save(c1);
+        Course c2 = courseStore.findFirstByName(course2);
+        c2.addStudent(bob);
+        courseStore.save(c2);
+        System.out.println("\t\t ---end Transaction---");
+    }
+
+    /**
+     * create new Student() and associate 2 Course, then save( Student )
+     *
+     * put all entity inside one transaction , to avoid:
+     * exception "Multiple representations of the same entity"
+     * exception "detached entity passed to persist"
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addMultipleCourseFromStudent(Student newStudent, String course1, String course2) {
+        Course c1 = courseStore.findFirstByName(course1);
+        Course c2 = courseStore.findFirstByName(course2);
+        newStudent.addCourse(c1).addCourse(c2);
+        Student bob = studentStore.save(newStudent);
+        System.out.println("\t\t ---end Transaction---" + bob);
     }
 
     @Transactional(readOnly = true)

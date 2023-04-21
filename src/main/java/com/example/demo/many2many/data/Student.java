@@ -1,10 +1,7 @@
 package com.example.demo.many2many.data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -16,7 +13,7 @@ public class Student  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(name = "age")
     private Integer age = null;
@@ -55,17 +52,20 @@ public class Student  {
 
     // getters and setters
 
-    public void addCourse(Course course) {
-        this.addCourse(course, true);
+    public Student addCourse(Course course) {
+        getLikedCourses().add(course);
+        course.getStudents().add(this);
+        //this.addCourse(course, true);
+        return this;
     }
 
-    public void addCourse(Course course, boolean configCourse) {
-        this.likedCourses.add(course);
-        if(configCourse) {
-            course.addStudent(this, false);
-        }
-
-    }
+//    public void addCourse(Course course, boolean configCourse) {
+//        this.likedCourses.add(course);
+//        if(configCourse) {
+//            course.addStudent(this, false);
+//        }
+//
+//    }
 
     public void removeCourse(long courseId) {
         removeCourse(courseId, true);
@@ -102,11 +102,11 @@ public class Student  {
                 '}';
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -130,5 +130,18 @@ public class Student  {
         return likedCourses.stream()
                 .filter(e->(e==course || e.getName().equalsIgnoreCase(course.getName())))
                 .findFirst();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+        Student student = (Student) o;
+        return getId()!=null && getId().equals(student.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getClass());
     }
 }

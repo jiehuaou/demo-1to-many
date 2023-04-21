@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 
-public interface StudentStore extends JpaRepository<Student, Integer>, ComplexStudentRepository {
+public interface StudentStore extends JpaRepository<Student, Long>, ComplexStudentRepository {
 
     // specify which association will be fetched in this query
     @EntityGraph(attributePaths = "likedCourses")

@@ -36,7 +36,7 @@ public class Runner13Creator implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("-------- many2many creator begin -------------");
 
-//         create student with new Course
+//         create new student with new Course
         Student john = new Student("John");
         Student lexi = new Student("Lexi", 30);
         Course aws = new Course("AWS");
@@ -44,6 +44,7 @@ public class Runner13Creator implements CommandLineRunner {
 
         john.addCourse(aws);
         john.addCourse(web);
+
         lexi.addCourse(aws);
 
         many2ManyService.saveStudent(john);

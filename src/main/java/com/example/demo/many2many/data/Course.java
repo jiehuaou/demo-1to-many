@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -34,7 +35,7 @@ public class Course {
         this.name = name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -51,15 +52,16 @@ public class Course {
     }
 
     public void addStudent(Student student) {
-        this.addStudent(student, true);
+        this.getStudents().add(student);
+        student.getLikedCourses().add(this);
     }
 
-    public void addStudent(Student student, boolean configStudent) {
-        this.students.add(student);
-        if(configStudent) {
-            student.addCourse(this, false);
-        }
-    }
+//    public void addStudent(Student student, boolean configStudent) {
+//
+//        if(configStudent) {
+//            student.addCourse(this, false);
+//        }
+//    }
 
     public void removeStudent(Long studentId) {
         removeStudent(studentId, true);
@@ -99,11 +101,24 @@ public class Course {
 
 
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public void setStudents(Set<Student> students) {
-        this.students = students;
+        this.students = new HashSet<>(students);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Course)) return false;
+        Course course = (Course) o;
+        return getId() != null && getId().equals(course.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass());
     }
 }

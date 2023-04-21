@@ -34,7 +34,7 @@ public class Runner14Update implements CommandLineRunner {
         // existing Student "Joe" like existing Course "AWS"
         Optional<Student> joe = studentStore.findFirstByTitle("Joe");
         joe.ifPresent(e->{
-            Course aws = courseStore.findByName("AWS").get(0);
+            Course aws = courseStore.findFirstByName("AWS");
             e.addCourse(aws);
             service.saveStudent(e);
         });
@@ -42,7 +42,7 @@ public class Runner14Update implements CommandLineRunner {
 
         // existing Student “Tiger” like existing Course “Web”
         Student tiger = studentStore.findTop1ByTitle("Tiger");
-        Course web = courseStore.findByName("Web 3.0").get(0);
+        Course web = courseStore.findFirstByName("Web 3.0");
         web.addStudent(tiger);
         service.saveCourse(web);
 

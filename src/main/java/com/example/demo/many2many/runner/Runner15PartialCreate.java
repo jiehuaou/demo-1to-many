@@ -36,15 +36,21 @@ public class Runner15PartialCreate implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("-------- Partial-Create-StudentCourse begin -------------");
 
-        // create new student with existing course
+        // create new student with 2 existing course
+        // by transient object
         Student bob = new Student("Bob");
-        Course aws = courseStore.findByName("AWS").get(0);
-        //aws.addStudent(bob);
-        bob.addCourse(aws);      // same as above
-        service.saveCourse(aws); // can not save student here otherwise throw "detached entity passed to persist" Exception
+        bob.addCourse(courseStore.findFirstByName("AWS")).addCourse(courseStore.findFirstByName("Web 3.0"));
+        service.saveStudent(bob);
+
+        // inside transaction
+        service.addMultipleCourseFromCourse(new Student("Bob 1"), "AWS", "Web 3.0");
+        service.addMultipleCourseFromStudent(new Student("Bob 2"), "AWS", "Web 3.0");
+        //bob.addCourse(web);
+        //bob.setTitle("Bob2");
+        // bob = service.saveStudent(bob);  // can not save student here otherwise throw "detached entity passed to persist" Exception
 
         // create new course with existing student
-        Student lexi = studentStore.findByTitle("Lexi").get(0);
+        Student lexi = studentStore.findFirstByTitle("Lexi").get();
         Course cpp = new Course("C++");
         lexi.addCourse(cpp);
         service.saveStudent(lexi);  // can not save Course here otherwise throw "detached entity passed to persist" Exception

@@ -12,7 +12,7 @@
 	<artifactId>demo-1to-many</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>demo-1to-many</name>
-	<description>Demo project for Hibernate One to Many </description>
+	<description>Demo project for JPA N to N, and other features</description>
 	<properties>
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 		<org.projectlombok.version>1.18.26</org.projectlombok.version>
@@ -56,10 +56,9 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${org.projectlombok.version}</version>
-			<scope>provided</scope>
+<!--			<scope>provided</scope>-->
 		</dependency>
-
-
+		
 
 	</dependencies>
 

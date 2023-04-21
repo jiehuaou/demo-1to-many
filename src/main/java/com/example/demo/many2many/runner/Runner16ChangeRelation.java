@@ -35,15 +35,15 @@ public class Runner16ChangeRelation implements CommandLineRunner {
 
         // Student "Bob" Course add C++ and remove AWS, then save Student
         Student bob = studentStore.findByTitle("Bob").get(0);
-        Course aws = courseStore.findByName("AWS").get(0);
-        Course cpp = courseStore.findByName("C++").get(0);
+        Course aws = courseStore.findFirstByName("AWS");
+        Course cpp = courseStore.findFirstByName("C++");
 
         bob.removeCourse(aws.getId());      //  Bob remove Course "AWS"
         bob.addCourse(cpp);                 //  Bob add    Course "C++"
         Student bob2 = service.saveStudent(bob);   // Student is Owner of relationship, Only Owner can remove the relationship
 
         // Course "Java" add Student "Bob" and remove "Joe", then save Course
-        Course java = courseStore.findByName("java").get(0);
+        Course java = courseStore.findFirstByName("java");
         Student joe = studentStore.findByTitle("Joe").get(0);
         java.removeStudent(joe.getId());    // removing Student from Course, not work here
         java.addStudent(bob2);            // Student can be added from Course,
