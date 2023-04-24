@@ -84,7 +84,7 @@ public class Runner13CreateNewNew implements CommandLineRunner {
 
 
         log.info("-------- many2many creator end 2-------------");
-        StreamSupport.stream(studentStore.findAll().spliterator(), false).forEach(e -> log.info(e.toString()));
+        studentStore.findAll().forEach(e -> log.info(e.toString()));
         log.info("-------- many2many creator check 2 -------------");
     }
 }

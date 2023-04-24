@@ -91,6 +91,13 @@ public class Course {
                 .findFirst();
     }
 
+    @PreRemove
+    private void cleanAssociated() {
+        students.forEach(student->{
+            student.getLikedCourses().removeIf(c->c.equals(this));
+        });
+    }
+
 
 
     @Override

@@ -34,7 +34,7 @@ public class Runner17PartialCreateFailed implements CommandLineRunner {
     Many2ManyService service;
     @Override
     public void run(String... args) throws Exception {
-        log.info("-------- Partial-Create-StudentCourse begin -------------");
+        log.info("-------- Runner17 Partial Create Failed begin -------------");
 
 
         // create new course with 2 existing student
@@ -51,9 +51,9 @@ public class Runner17PartialCreateFailed implements CommandLineRunner {
             log.error("*** should not work here ***", e);
         }
 
-        log.info("-------- Partial-Create-StudentCourse end -------------");
+        log.info("-------- Runner17 Partial Create Failed end -------------");
         StreamSupport.stream(studentStore.findAll().spliterator(), false)
                 .forEach(e -> log.info(e.toString()));
-        log.info("-------- Partial-Create-StudentCourse check -------------");
+        log.info("-------- Runner17 Partial Create Failed check -------------");
     }
 }

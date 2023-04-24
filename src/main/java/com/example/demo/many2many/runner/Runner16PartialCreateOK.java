@@ -34,16 +34,16 @@ public class Runner16PartialCreateOK implements CommandLineRunner {
     Many2ManyService service;
     @Override
     public void run(String... args) throws Exception {
-        log.info("-------- Partial-Create-StudentCourse begin -------------");
+        log.info("-------- Runner16 Partial Create OK begin -------------");
 
         // create new student with 2 existing course
         // inside one transaction
         service.addMultipleCourseFromCourse(new Student("Bob"), "AWS", "Web 3.0", "Android");
         service.addMultipleCourseFromStudent(new Student("Bob 2"), "AWS", "Web 3.0");
 
-        log.info("-------- Partial-Create-StudentCourse end -------------");
+        log.info("-------- Runner16 Partial Create OK end -------------");
         StreamSupport.stream(studentStore.findAll().spliterator(), false)
                 .forEach(e -> log.info(e.toString()));
-        log.info("-------- Partial-Create-StudentCourse check -------------");
+        log.info("-------- Runner16 Partial Create OK check -------------");
     }
 }

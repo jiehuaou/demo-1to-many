@@ -33,7 +33,7 @@ public class Runner18PartialCreateOK implements CommandLineRunner {
     Many2ManyService service;
     @Override
     public void run(String... args) throws Exception {
-        log.info("-------- Partial-Create-StudentCourse begin -------------");
+        log.info("-------- Runner18 Partial Create OK begin -------------");
 
 
         // create new course with 2 existing student
@@ -44,9 +44,9 @@ public class Runner18PartialCreateOK implements CommandLineRunner {
         Course cpp2 = new Course("C++ Part 2");
         service.addMultipleStudent(cpp2, "Lexi", "Joe");
 
-        log.info("-------- Partial-Create-StudentCourse end -------------");
+        log.info("-------- Runner18 Partial Create OK end -------------");
         studentStore.findFirstByTitle("Joe").ifPresent(e->log.info("{}", e));
         studentStore.findFirstByTitle("Lexi").ifPresent(e->log.info("{}", e));
-        log.info("-------- Partial-Create-StudentCourse check -------------");
+        log.info("-------- Runner18 Partial Create OK check -------------");
     }
 }

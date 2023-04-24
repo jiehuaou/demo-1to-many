@@ -31,6 +31,13 @@ public class Many2ManyService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
+    public Student deleteStudent(Student student) {
+        // ...
+        studentStore.delete(student);
+        return student;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
     public void saveAll(Student ...students) {
         Arrays.stream(students).forEach(e-> studentStore.save(e));
 
@@ -39,6 +46,13 @@ public class Many2ManyService {
     @Transactional(propagation = Propagation.REQUIRED)
     public Course saveCourse(Course course) {
         return courseStore.save(course);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Course deleteCourse(Course course) {
+        // ...
+        courseStore.delete(course);
+        return course;
     }
 
     /**

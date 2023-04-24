@@ -137,6 +137,16 @@ public class Student  {
                 .findFirst();
     }
 
+    /**
+     * need to remove reference from course before deletion,
+     */
+    @PreRemove
+    private void cleanAssociated() {
+        likedCourses.forEach(e->{
+            e.getStudents().remove(this);
+        });
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

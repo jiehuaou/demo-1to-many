@@ -29,7 +29,7 @@ public class Runner28RemoveRelationViaStudent implements CommandLineRunner {
     Many2ManyService service;
     @Override
     public void run(String... args) throws Exception {
-        log.info("-------- Change-Relation-Student-Course begin -------------");
+        log.info("-------- Runner28 Remove Relation Via Student begin -------------");
 
         // Student "Bob" Course add C++ and remove AWS, then save Student
         Student bob = studentStore.findByTitle("Bob").get(0);
@@ -44,8 +44,8 @@ public class Runner28RemoveRelationViaStudent implements CommandLineRunner {
         bob.addCourse(cpp2);                 //  Bob add    Course "C++ Part 2"
         service.saveStudent(bob);
 
-        log.info("-------- Change-Relation-Student-Course end -------------");
+        log.info("-------- Runner28 Remove Relation Via Student end -------------");
         studentStore.findFirstByTitle("Bob").ifPresent(e->log.info("{}", e));
-        log.info("-------- Change-Relation-Student-Course check -------------");
+        log.info("-------- Runner28 Remove Relation Via Student check -------------");
     }
 }
