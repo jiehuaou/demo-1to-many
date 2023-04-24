@@ -31,7 +31,7 @@ public class Runner38DeleteCourse implements CommandLineRunner {
         final String javaCourse = "java";
         //
         Course java = courseStore.findFirstByName(javaCourse);
-
+        //courseStore.delete(java);
         service.deleteCourse(java);   // need to remove reference from Student before deletion,
 
         log.info("-------- Runner38 Delete Course end -------------");
