@@ -26,9 +26,9 @@ import java.util.stream.StreamSupport;
  * demo to use @EntityGraph(attributePaths = "likedCourses"), by which fetch association in one query,
  */
 @Slf4j
-@Order(19)
-@Component("find student with like course")
-public class Runner19QueryStudent implements CommandLineRunner {
+@Order(50)
+@Component("find student with like course 50")
+public class Runner50QueryStudent implements CommandLineRunner {
     @Autowired
     StudentStore studentStore;
     @Autowired

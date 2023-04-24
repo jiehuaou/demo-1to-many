@@ -3,10 +3,7 @@ package com.example.demo.many2many.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -25,7 +22,7 @@ public class Course {
 
     @ManyToMany(mappedBy = "likedCourses" , cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Student> students = new HashSet<>();
+    private List<Student> students = new ArrayList<>();
 
     public Course() {
 
@@ -47,7 +44,7 @@ public class Course {
         this.name = name;
     }
 
-    public Set<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
@@ -63,8 +60,8 @@ public class Course {
 //        }
 //    }
 
-    public void removeStudent(Long studentId) {
-        removeStudent(studentId, true);
+    public List<Student> removeStudent(Long studentId) {
+        return removeStudent(studentId, true);
     }
 
     /**
@@ -72,15 +69,29 @@ public class Course {
      * @param studentId
      * @param configStudent
      */
-    public void removeStudent(Long studentId, boolean configStudent) {
+    public List<Student> removeStudent(Long studentId, boolean configStudent) {
         List<Student> removedStudentList = this.students.stream()
-                .filter(e -> e.getId()==studentId)
+                .filter(e -> e.getId().equals(studentId))
                 .collect(Collectors.toList());
         students.removeAll(removedStudentList);
         if(configStudent) {
-            removedStudentList.stream().forEach(e->e.removeCourse(this.getId(), false));
+            removedStudentList.forEach(e->e.removeCourse(this.getId(), false));
         }
+        return removedStudentList;
     }
+
+    public void removeStudentObject(Student student) {
+        this.students.remove(student);
+        student.getLikedCourses().remove(this);
+    }
+
+    public Optional<Student> findStudentByName(String studentName) {
+        return students.stream()
+                .filter(e->(studentName!=null && studentName.equals(e.getTitle())))
+                .findFirst();
+    }
+
+
 
     @Override
     public String toString() {
@@ -105,8 +116,8 @@ public class Course {
         this.id = id;
     }
 
-    public void setStudents(Set<Student> students) {
-        this.students = new HashSet<>(students);
+    public void setStudents(List<Student> students) {
+        this.students = new ArrayList<>(students);
     }
 
     @Override
@@ -119,6 +130,6 @@ public class Course {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getClass());
+        return Objects.hash(Course.class);
     }
 }

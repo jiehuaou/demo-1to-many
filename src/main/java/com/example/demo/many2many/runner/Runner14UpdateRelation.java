@@ -15,12 +15,12 @@ import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 /**
- * add relation with existing student and existing course
+ * add relation between existing student and existing course
  */
 @Slf4j
 @Order(14)
-@Component("UpdateStudentCourse")
-public class Runner14Update implements CommandLineRunner {
+@Component("Runner14UpdateRelation")
+public class Runner14UpdateRelation implements CommandLineRunner {
     @Autowired
     StudentStore studentStore;
     @Autowired
@@ -35,7 +35,9 @@ public class Runner14Update implements CommandLineRunner {
         Optional<Student> joe = studentStore.findFirstByTitle("Joe");
         joe.ifPresent(e->{
             Course aws = courseStore.findFirstByName("AWS");
+            Course android = courseStore.findFirstByName("Android");
             e.addCourse(aws);
+            e.addCourse(android);
             service.saveStudent(e);
         });
 
@@ -43,13 +45,14 @@ public class Runner14Update implements CommandLineRunner {
         // existing Student “Tiger” like existing Course “Web”
         Student tiger = studentStore.findTop1ByTitle("Tiger");
         Course web = courseStore.findFirstByName("Web 3.0");
+        Student kate = studentStore.findTop1ByTitle("Kate");
         web.addStudent(tiger);
+        web.addStudent(kate);
         service.saveCourse(web);
 
         log.info("-------- update-course update end -------------");
-//        StreamSupport.stream(courseStore.findAll().spliterator(), false).forEach(e -> log.info(e.toStringWithStudent()));
-        StreamSupport.stream(studentStore.findAll().spliterator(), false)
-                .forEach(e -> log.info(e.toString()));
+        studentStore.findFirstByTitle("Joe").ifPresent(e->log.info("{}", e));
+        courseStore.findOneByName("Web 3.0").ifPresent(e->log.info("{}", e.toStringWithStudent()));
         log.info("-------- update-course check  end -------------");
     }
 }

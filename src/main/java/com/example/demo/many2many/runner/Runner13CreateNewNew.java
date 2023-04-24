@@ -23,8 +23,8 @@ import java.util.stream.StreamSupport;
  */
 @Slf4j
 @Order(13)
-@Component("CreatorStudentCourse")
-public class Runner13Creator implements CommandLineRunner {
+@Component("Runner13CreateNewNew")
+public class Runner13CreateNewNew implements CommandLineRunner {
 
     @Autowired
     private StudentStore studentStore;
@@ -39,6 +39,7 @@ public class Runner13Creator implements CommandLineRunner {
 //         create new student with new Course
         Student john = new Student("John");
         Student lexi = new Student("Lexi", 30);
+
         Course aws = new Course("AWS");
         Course web = new Course("Web 3.0");
 
@@ -50,9 +51,12 @@ public class Runner13Creator implements CommandLineRunner {
         many2ManyService.saveStudent(john);
         many2ManyService.saveStudent(lexi);
 
-        // Lexi later on like "Web 3.0"
+        // Lexi later add like "Web 3.0"
         lexi.addCourse(web);
         many2ManyService.saveStudent(lexi);
+
+        Student kate = new Student("Kate");
+        many2ManyService.saveStudent(kate);
 
         log.info("-------- many2many creator end 1-------------");
         List<Student> all = studentStore.findAll();
@@ -68,11 +72,15 @@ public class Runner13Creator implements CommandLineRunner {
 
         nodeJs.addStudent(joe);
         nodeJs.addStudent(tiger);
+
         java.addStudent(joe);
         java.addStudent(tiger);
 
         many2ManyService.saveCourse(nodeJs);
         many2ManyService.saveCourse(java);
+
+        Course android=new Course("Android");
+        many2ManyService.saveCourse(android);
 
 
         log.info("-------- many2many creator end 2-------------");

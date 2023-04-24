@@ -32,7 +32,7 @@ public class Student  {
             name = "course_like",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private Set<Course> likedCourses = new HashSet<>();
+    private Set<Course> likedCourses = new HashSet<>();   // use Set is better than List on Owner-Side
 
     public Student () {
 
@@ -68,16 +68,21 @@ public class Student  {
 //    }
 
     public void removeCourse(long courseId) {
-        removeCourse(courseId, true);
+         removeCourse(courseId, true);
     }
     public void removeCourse(long courseId, boolean configCourse) {
         List<Course> removedCourseList = this.likedCourses.stream()
-                .filter(t -> t.getId() == courseId)
+                .filter(t -> t.getId().equals(courseId))
                 .collect(Collectors.toList());
         this.likedCourses.removeAll(removedCourseList);
         if(configCourse) {
             removedCourseList.stream().forEach(e -> e.removeStudent(this.getId(), false));
         }
+    }
+
+    public void removeCourseObject(Course course) {
+        this.likedCourses.remove(course);
+        course.getStudents().remove(this);
     }
 
     private String toStringAge(Integer actual) {
@@ -123,12 +128,12 @@ public class Student  {
     }
 
     public void setLikedCourses(Set<Course> likedCourses) {
-        this.likedCourses = likedCourses;
+        this.likedCourses = new HashSet<>(likedCourses);
     }
 
-    public Optional<Course> findCource(Course course) {
+    public Optional<Course> findCourceByName(String courseName) {
         return likedCourses.stream()
-                .filter(e->(e==course || e.getName().equalsIgnoreCase(course.getName())))
+                .filter(e->(courseName!=null && courseName.equals(e.getName())))
                 .findFirst();
     }
 
@@ -142,6 +147,6 @@ public class Student  {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getClass());
+        return Objects.hashCode(Student.class);
     }
 }

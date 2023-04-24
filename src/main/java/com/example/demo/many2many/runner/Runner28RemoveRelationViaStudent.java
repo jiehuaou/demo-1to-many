@@ -14,15 +14,13 @@ import org.springframework.stereotype.Component;
 import java.util.stream.StreamSupport;
 
 /**
- * change relation
- * 1, Student "Bob" add C++ and remove AWS, then save Student
- * 2, Course "Java" add Student "Bob" and remove "Joe", then save Course
- *       ** removing Student from Course (non-owner side), not work here
+ * change relation via Student
+ * 1, Student "Bob" add C++ and remove AWS, "Web 3.0", then save Student
  */
 @Slf4j
-@Order(16)
-@Component("ChangeRelationStudentCourse")
-public class Runner16ChangeRelation implements CommandLineRunner {
+@Order(28)
+@Component("Runner28RemoveRelation")
+public class Runner28RemoveRelationViaStudent implements CommandLineRunner {
     @Autowired
     StudentStore studentStore;
     @Autowired
@@ -36,21 +34,18 @@ public class Runner16ChangeRelation implements CommandLineRunner {
         // Student "Bob" Course add C++ and remove AWS, then save Student
         Student bob = studentStore.findByTitle("Bob").get(0);
         Course aws = courseStore.findFirstByName("AWS");
-        Course cpp = courseStore.findFirstByName("C++");
+        Course web = courseStore.findFirstByName("Web 3.0");
+        Course cpp2 = courseStore.findFirstByName("C++ Part 2");  // add
 
-        bob.removeCourse(aws.getId());      //  Bob remove Course "AWS"
-        bob.addCourse(cpp);                 //  Bob add    Course "C++"
-        Student bob2 = service.saveStudent(bob);   // Student is Owner of relationship, Only Owner can remove the relationship
-
-        // Course "Java" add Student "Bob" and remove "Joe", then save Course
-        Course java = courseStore.findFirstByName("java");
-        Student joe = studentStore.findByTitle("Joe").get(0);
-        java.removeStudent(joe.getId());    // removing Student from Course, not work here
-        java.addStudent(bob2);            // Student can be added from Course,
-        service.saveCourse(java);        // does not work, deleting Student from  Course
+//        bob.removeCourse(aws.getId());       //  Bob remove Course "AWS"
+//        bob.removeCourse(web.getId());       //  Bob remove    Course "Web"
+        bob.removeCourseObject(aws);
+        bob.removeCourseObject(web);
+        bob.addCourse(cpp2);                 //  Bob add    Course "C++ Part 2"
+        service.saveStudent(bob);
 
         log.info("-------- Change-Relation-Student-Course end -------------");
-        StreamSupport.stream(studentStore.findAll().spliterator(), false).forEach(e -> log.info(e.toString()));
+        studentStore.findFirstByTitle("Bob").ifPresent(e->log.info("{}", e));
         log.info("-------- Change-Relation-Student-Course check -------------");
     }
 }
