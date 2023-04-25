@@ -15,7 +15,6 @@ import java.util.stream.StreamSupport;
 /**
  * add relation
  * create new course  with existing student
- * create new student with existing course
  *
  * to avoid the "detached entity passed to persist" Exception,
  * try to save the existing Entity after configure relation-ship with new Object.

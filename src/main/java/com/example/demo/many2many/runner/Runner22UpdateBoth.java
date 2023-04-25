@@ -35,6 +35,11 @@ public class Runner22UpdateBoth implements CommandLineRunner {
 
         // existing Student “Tiger” like existing Course “Web”
         updateBoth1ViaStudent();
+        log.info("-------- Runner22_Update_Both end -------------");
+        studentStore.findFirstByTitle("Kate").ifPresent(e->log.info("{}", e));
+        courseStore.findOneByName("Web 3.0").ifPresent(e->log.info("{}", e.toStringWithStudent()));
+        log.info("-------- Runner22_Update_Both  end -------------");
+
         updateBoth2ViaCourse();
 
         log.info("-------- Runner22_Update_Both end -------------");
@@ -43,7 +48,7 @@ public class Runner22UpdateBoth implements CommandLineRunner {
         log.info("-------- Runner22_Update_Both  end -------------");
     }
 
-    //@Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED)
     void updateBoth1ViaStudent() {
         Course web = courseStore.findFirstByName("Web 3.0");
         Student kate = studentStore.findTop1ByTitle("Kate");
