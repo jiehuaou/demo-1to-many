@@ -20,9 +20,19 @@ public class Course {
     @Column(name = "name")
     private String name;
 
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    private String schedule;
+
     @ManyToMany(mappedBy = "likedCourses" , cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Student> students = new ArrayList<>();
+    private Set<Student> students = new HashSet<>();
 
     public Course() {
 
@@ -44,13 +54,22 @@ public class Course {
         this.name = name;
     }
 
-    public List<Student> getStudents() {
+    public Set<Student> getStudents() {
         return students;
     }
 
+    /**
+     * add student and insure replace it if exist
+     */
     public void addStudent(Student student) {
-        this.getStudents().add(student);
-        student.getLikedCourses().add(this);
+        if(!this.getStudents().add(student)) {
+            this.getStudents().remove(student);
+            this.getStudents().add(student);
+        }
+        if (!student.getLikedCourses().add(this)) {
+            this.getStudents().remove(student);
+            this.getStudents().add(student);
+        }
     }
 
 //    public void addStudent(Student student, boolean configStudent) {
@@ -105,6 +124,7 @@ public class Course {
         return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", schedule='" + schedule + '\'' +
                 '}';
     }
 
@@ -113,6 +133,7 @@ public class Course {
         return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", schedule='" + schedule + '\'' +
                 ", students='" + studentText + '\'' +
                 '}';
     }
@@ -123,8 +144,8 @@ public class Course {
         this.id = id;
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = new ArrayList<>(students);
+    public void setStudents(Set<Student> students) {
+        this.students = new HashSet<>(students);
     }
 
     @Override

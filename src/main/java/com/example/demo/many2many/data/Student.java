@@ -50,12 +50,18 @@ public class Student  {
 //        this.published = published;
     }
 
-    // getters and setters
-
+    /**
+     * add Course and insure replace it if exist
+     */
     public Student addCourse(Course course) {
-        getLikedCourses().add(course);
-        course.getStudents().add(this);
-        //this.addCourse(course, true);
+        if(!getLikedCourses().add(course)) {
+            getLikedCourses().remove(course);
+            getLikedCourses().add(course);
+        }
+        if(!course.getStudents().add(this)) {
+            course.getStudents().remove(this);
+            course.getStudents().add(this);
+        }
         return this;
     }
 
@@ -158,5 +164,13 @@ public class Student  {
     @Override
     public int hashCode() {
         return Objects.hashCode(Student.class);
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }
