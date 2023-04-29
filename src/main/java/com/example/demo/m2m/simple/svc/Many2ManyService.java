@@ -1,7 +1,7 @@
-package com.example.demo.many2many.svc;
+package com.example.demo.m2m.simple.svc;
 
-import com.example.demo.many2many.data.Course;
-import com.example.demo.many2many.data.Student;
+import com.example.demo.m2m.simple.data.Course;
+import com.example.demo.m2m.simple.data.Student;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @Slf4j

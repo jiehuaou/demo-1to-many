@@ -20,10 +20,10 @@ import java.util.Optional;
 public class VehicleDelete3Runner implements CommandLineRunner {
 
     @Autowired
-    private PersonService personService;
+    private DriverService driverService;
 
     @Autowired
-    private PersonStore personStore;
+    private DriverStore driverStore;
 
     @Autowired
     private VehicleStore vehicleStore;
@@ -33,19 +33,19 @@ public class VehicleDelete3Runner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("=========== delete 3 Person begin ==========");
 
-        Optional<Person> person = personStore.findByName("Mark");
+        Optional<Driver> person = driverStore.findByName("Mark");
         if(person.isPresent()) {
             /**
              * internally
              * we must code to delete associated vehicle (@ManyToOne) first,
              * then delete Person.
              */
-            personService.deletePerson(person.get());
+            driverService.deletePerson(person.get());
         }
 
         log.info("=========== delete 3 Person end ==========");
-        personService.queryPerson().forEach(e-> log.info("{}", e.toString()));
-        personService.queryVehicle().forEach(e-> log.info("{}", e.toString()));
+        driverService.queryPerson().forEach(e-> log.info("{}", e.toString()));
+        driverService.queryVehicle().forEach(e-> log.info("{}", e.toString()));
         log.info("=========== query Vehicle end ==========");
     }
 }

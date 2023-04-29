@@ -16,8 +16,8 @@ public class Vehicle {
             joinColumns = {
                     @JoinColumn(name = "vehicleId", referencedColumnName = "id")},
             inverseJoinColumns = {
-                    @JoinColumn(name = "personId", referencedColumnName = "id")})
-    private Person person;
+                    @JoinColumn(name = "driverId", referencedColumnName = "id")})
+    private Driver driver;
 
     public Vehicle() {
     }
@@ -26,9 +26,9 @@ public class Vehicle {
         this.name = name;
     }
 
-    public Vehicle(String name, Person person) {
+    public Vehicle(String name, Driver driver) {
         this.name = name;
-        this.person = person;
+        this.driver = driver;
     }
 
     public Integer getId() {
@@ -47,12 +47,12 @@ public class Vehicle {
         this.name = name;
     }
 
-    public Person getPerson() {
-        return person;
+    public Driver getDriver() {
+        return driver;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class Vehicle {
         return "Vehicle{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", person=" + person +
+                ", Driver=" + driver +
                 '}';
     }
 }

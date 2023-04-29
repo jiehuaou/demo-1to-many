@@ -1,24 +1,19 @@
-package com.example.demo.many2many.runner;
+package com.example.demo.m2m.simple.runner;
 
-import com.example.demo.many2many.data.Course;
-import com.example.demo.many2many.data.Student;
-import com.example.demo.many2many.data.StudentDTO;
-import com.example.demo.many2many.data.StudentView;
-import com.example.demo.many2many.svc.CourseStore;
-import com.example.demo.many2many.svc.Many2ManyService;
-import com.example.demo.many2many.svc.StudentStore;
+import com.example.demo.m2m.simple.data.Student;
+import com.example.demo.m2m.simple.data.StudentDTO;
+import com.example.demo.m2m.simple.data.StudentView;
+import com.example.demo.m2m.simple.svc.CourseStore;
+import com.example.demo.m2m.simple.svc.Many2ManyService;
+import com.example.demo.m2m.simple.svc.StudentStore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
  * find student with like course,

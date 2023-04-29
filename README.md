@@ -331,7 +331,7 @@ public interface StudentStore extends JpaRepository<Student, Integer> {
     public List<StudentView> findAllView();
 
     // projection with DTO object
-    @Query("select new com.example.demo.many2many.data.StudentDTO(s.age, s.title) from Student s")
+    @Query("select new data.com.example.demo.m2m.simple.StudentDTO(s.age, s.title) from Student s")
     public List<StudentDTO> findAllDto();
 }
 ```

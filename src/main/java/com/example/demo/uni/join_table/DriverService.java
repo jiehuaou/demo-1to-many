@@ -1,7 +1,6 @@
 package com.example.demo.uni.join_table;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,17 +9,17 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class PersonService {
-    private final PersonStore personStore;
+public class DriverService {
+    private final DriverStore driverStore;
     private final VehicleStore vehicleStore;
 
-    public PersonService(PersonStore personStore, VehicleStore vehicleStore) {
-        this.personStore = personStore;
+    public DriverService(DriverStore driverStore, VehicleStore vehicleStore) {
+        this.driverStore = driverStore;
         this.vehicleStore = vehicleStore;
     }
 
-    public List<Person> queryPerson() {
-        return personStore.findAll();
+    public List<Driver> queryPerson() {
+        return driverStore.findAll();
     }
 
     public List<Vehicle> queryVehicle() {
@@ -28,8 +27,8 @@ public class PersonService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public void savePerson(Person person) {
-        personStore.save(person);
+    public void savePerson(Driver driver) {
+        driverStore.save(driver);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -43,14 +42,14 @@ public class PersonService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deletePerson(Person person) {
-        List<Vehicle> vehicleList = vehicleStore.findAllByPersonId(person.getId());
+    public void deletePerson(Driver driver) {
+        List<Vehicle> vehicleList = vehicleStore.findAllByDriverId(driver.getId());
         vehicleList.forEach(vehicle->{
             log.info("remove relation of {}", vehicle.toString());
-            vehicle.setPerson(null);
+            vehicle.setDriver(null);
             vehicleStore.save(vehicle);
         });
-        personStore.delete(person);
+        driverStore.delete(driver);
     }
 
 }

@@ -3,7 +3,7 @@ package com.example.demo.uni.join_table;
 import javax.persistence.*;
 
 @Entity
-public class Person{
+public class Driver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -11,15 +11,15 @@ public class Person{
 
     private String name;
 
-    public Person() {
+    public Driver() {
     }
 
-    public Person(Integer id, String name) {
+    public Driver(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Person(String name) {
+    public Driver(String name) {
         this.name = name;
     }
 
@@ -42,7 +42,7 @@ public class Person{
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Driver{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

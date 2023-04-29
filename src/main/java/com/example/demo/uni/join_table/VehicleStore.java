@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface VehicleStore extends JpaRepository<Vehicle, Integer> {
     Optional<Vehicle> findByName(String name);
-    List<Vehicle> findAllByPersonId(Integer personId);
+    List<Vehicle> findAllByDriverId(Integer driverId);
 }

@@ -1,7 +1,7 @@
-package com.example.demo.many2many.svc;
+package com.example.demo.m2m.simple.svc;
 
-import com.example.demo.many2many.data.CourseDTO;
-import com.example.demo.many2many.data.StudentDTO;
+import com.example.demo.m2m.simple.data.CourseDTO;
+import com.example.demo.m2m.simple.data.StudentDTO;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;

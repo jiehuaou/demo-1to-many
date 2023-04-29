@@ -1,7 +1,6 @@
-package com.example.demo.many2many.svc;
+package com.example.demo.m2m.simple.svc;
 
-import com.example.demo.many2many.data.StudentDTO;
-import org.springframework.data.jpa.repository.Query;
+import com.example.demo.m2m.simple.data.StudentDTO;
 
 import java.util.List;
 

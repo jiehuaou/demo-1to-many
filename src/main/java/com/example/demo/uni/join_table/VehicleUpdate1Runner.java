@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
 public class VehicleUpdate1Runner implements CommandLineRunner {
 
     @Autowired
-    private PersonService personService;
+    private DriverService driverService;
 
     @Autowired
-    private PersonStore personStore;
+    private DriverStore driverStore;
 
     @Autowired
     private VehicleStore vehicleStore;
@@ -29,14 +29,14 @@ public class VehicleUpdate1Runner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("=========== update 1 Vehicle begin ==========");
 
-        personStore.findByName("Joe").ifPresent(person -> {
+        driverStore.findByName("Joe").ifPresent(person -> {
             Vehicle toyota = new Vehicle("Toyota", person);
-            personService.saveVehicle(toyota);
+            driverService.saveVehicle(toyota);
         });
 
         log.info("=========== update 1 Vehicle end ==========");
-        personService.queryPerson().forEach(e-> log.info("{}", e.toString()));
-        personService.queryVehicle().forEach(e-> log.info("{}", e.toString()));
+        driverService.queryPerson().forEach(e-> log.info("{}", e.toString()));
+        driverService.queryVehicle().forEach(e-> log.info("{}", e.toString()));
         log.info("=========== query Vehicle end ==========");
     }
 }

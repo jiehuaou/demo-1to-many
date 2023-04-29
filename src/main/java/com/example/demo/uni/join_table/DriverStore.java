@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface PersonStore extends JpaRepository<Person, Integer> {
-    Optional<Person> findByName(String name);
+public interface DriverStore extends JpaRepository<Driver, Integer> {
+    Optional<Driver> findByName(String name);
 }

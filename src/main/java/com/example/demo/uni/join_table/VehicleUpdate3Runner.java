@@ -18,10 +18,10 @@ import java.util.Optional;
 public class VehicleUpdate3Runner implements CommandLineRunner {
 
     @Autowired
-    private PersonService personService;
+    private DriverService driverService;
 
     @Autowired
-    private PersonStore personStore;
+    private DriverStore driverStore;
 
     @Autowired
     private VehicleStore vehicleStore;
@@ -34,13 +34,13 @@ public class VehicleUpdate3Runner implements CommandLineRunner {
         //Optional<Person> person = personStore.findByName("Mark");
         Optional<Vehicle> toyota = vehicleStore.findByName("Toyota");
         if(toyota.isPresent()) {
-            toyota.get().setPerson(null);  // remove relation between Vehicle "Toyota" and Person "Mark"
-            personService.saveVehicle(toyota.get());  // SQL : delete from vehicle_person where vehicle_id=?
+            toyota.get().setDriver(null);  // remove relation between Vehicle "Toyota" and Person "Mark"
+            driverService.saveVehicle(toyota.get());  // SQL : delete from vehicle_person where vehicle_id=?
         }
 
         log.info("=========== update 1 Vehicle end ==========");
-        personService.queryPerson().forEach(e-> log.info("{}", e.toString()));
-        personService.queryVehicle().forEach(e-> log.info("{}", e.toString()));
+        driverService.queryPerson().forEach(e-> log.info("{}", e.toString()));
+        driverService.queryVehicle().forEach(e-> log.info("{}", e.toString()));
         log.info("=========== query Vehicle end ==========");
     }
 }

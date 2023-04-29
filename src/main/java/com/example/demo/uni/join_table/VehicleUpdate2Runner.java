@@ -18,10 +18,10 @@ import java.util.Optional;
 public class VehicleUpdate2Runner implements CommandLineRunner {
 
     @Autowired
-    private PersonService personService;
+    private DriverService driverService;
 
     @Autowired
-    private PersonStore personStore;
+    private DriverStore driverStore;
 
     @Autowired
     private VehicleStore vehicleStore;
@@ -31,16 +31,16 @@ public class VehicleUpdate2Runner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("=========== update 1 Vehicle begin ==========");
 
-        Optional<Person> person = personStore.findByName("Mark");
+        Optional<Driver> person = driverStore.findByName("Mark");
         Optional<Vehicle> toyota = vehicleStore.findByName("Toyota");
         if(toyota.isPresent() && person.isPresent()) {
-            toyota.get().setPerson(person.get());
-            personService.saveVehicle(toyota.get());
+            toyota.get().setDriver(person.get());
+            driverService.saveVehicle(toyota.get());
         }
 
         log.info("=========== update 1 Vehicle end ==========");
-        personService.queryPerson().forEach(e-> log.info("{}", e.toString()));
-        personService.queryVehicle().forEach(e-> log.info("{}", e.toString()));
+        driverService.queryPerson().forEach(e-> log.info("{}", e.toString()));
+        driverService.queryVehicle().forEach(e-> log.info("{}", e.toString()));
         log.info("=========== query Vehicle end ==========");
     }
 }

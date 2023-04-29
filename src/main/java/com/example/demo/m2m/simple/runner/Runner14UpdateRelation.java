@@ -1,10 +1,10 @@
-package com.example.demo.many2many.runner;
+package com.example.demo.m2m.simple.runner;
 
-import com.example.demo.many2many.data.Course;
-import com.example.demo.many2many.data.Student;
-import com.example.demo.many2many.svc.CourseStore;
-import com.example.demo.many2many.svc.Many2ManyService;
-import com.example.demo.many2many.svc.StudentStore;
+import com.example.demo.m2m.simple.data.Course;
+import com.example.demo.m2m.simple.data.Student;
+import com.example.demo.m2m.simple.svc.CourseStore;
+import com.example.demo.m2m.simple.svc.Many2ManyService;
+import com.example.demo.m2m.simple.svc.StudentStore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +12,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * add relation between existing student and existing course

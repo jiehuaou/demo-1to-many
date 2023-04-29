@@ -1,4 +1,4 @@
-package com.example.demo.many2many.data;
+package com.example.demo.m2m.simple.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

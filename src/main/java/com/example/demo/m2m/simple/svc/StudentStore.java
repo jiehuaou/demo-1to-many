@@ -1,16 +1,11 @@
-package com.example.demo.many2many.svc;
+package com.example.demo.m2m.simple.svc;
 
-import com.example.demo.many2many.data.Student;
-import com.example.demo.many2many.data.StudentDTO;
-import com.example.demo.many2many.data.StudentView;
-import org.springframework.data.annotation.ReadOnlyProperty;
+import com.example.demo.m2m.simple.data.Student;
+import com.example.demo.m2m.simple.data.StudentDTO;
+import com.example.demo.m2m.simple.data.StudentView;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.Repository;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -35,7 +30,7 @@ public interface StudentStore extends JpaRepository<Student, Long>, ComplexStude
     public List<StudentView> findAllView();
 
     // projection with simple DTO object, performance is better than Interface projection
-    @Query("select new com.example.demo.many2many.data.StudentDTO(s.age, s.title) from Student s")
+    @Query("select new com.example.demo.m2m.simple.data.StudentDTO(s.age, s.title) from Student s")
     public List<StudentDTO> findAllStudentDTO();
 
     // returning Entity Stream, it must be executed within @Transaction

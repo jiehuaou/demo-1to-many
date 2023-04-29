@@ -22,10 +22,10 @@ import java.util.Optional;
 public class VehicleDelete2Runner implements CommandLineRunner {
 
     @Autowired
-    private PersonService personService;
+    private DriverService driverService;
 
     @Autowired
-    private PersonStore personStore;
+    private DriverStore driverStore;
 
     @Autowired
     private VehicleStore vehicleStore;
@@ -38,12 +38,12 @@ public class VehicleDelete2Runner implements CommandLineRunner {
         //Optional<Person> person = personStore.findByName("Mark");
         Optional<Vehicle> tesla5 = vehicleStore.findByName("tesla Model 5X");
         if(tesla5.isPresent()) {
-            personService.deleteVehicle(tesla5.get());
+            driverService.deleteVehicle(tesla5.get());
         }
 
         log.info("=========== delete 2 Vehicle end ==========");
-        personService.queryPerson().forEach(e-> log.info("{}", e.toString()));
-        personService.queryVehicle().forEach(e-> log.info("{}", e.toString()));
+        driverService.queryPerson().forEach(e-> log.info("{}", e.toString()));
+        driverService.queryVehicle().forEach(e-> log.info("{}", e.toString()));
         log.info("=========== query Vehicle end ==========");
     }
 }
