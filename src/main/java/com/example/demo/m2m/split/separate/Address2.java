@@ -1,11 +1,17 @@
 package com.example.demo.m2m.split.separate;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
+/**
+ * split many-to-many => 2 one-to-many with JoinEntity
+ *
+ * Person, Address and JoinEntity  (Owner side)
+ *
+ */
 @Entity
 public class Address2 implements Serializable {
     @Id
@@ -15,6 +21,7 @@ public class Address2 implements Serializable {
     private String street;
 
     @Column(name = "streetNo")
+    @NaturalId
     private String number;
 
     private String postalCode;
@@ -24,7 +31,7 @@ public class Address2 implements Serializable {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true
     )
-    private List<Person2Address2> associations = new ArrayList<>();
+    private Set<Person2Address2> associations = new HashSet<>();
 
     public Address2() {
     }
@@ -96,11 +103,11 @@ public class Address2 implements Serializable {
     }
 
     public void removePerson(Person2 person) {
+        Objects.requireNonNull(person);   Objects.requireNonNull(person.getId());
+        //------
         Person2Address2 personAddress = new Person2Address2(person, this);
-//        address.getOwners().remove(personAddress);
-//        addresses.remove(personAddress);
-//        personAddress.setPerson(null);
-//        personAddress.setAddress(null);
+        this.associations.removeIf(e->e.equalValue(personAddress));
+        person.getAssociations().removeIf(e->e.equalValue(personAddress));
     }
 
     @Override
@@ -113,11 +120,11 @@ public class Address2 implements Serializable {
                 '}';
     }
 
-    public List<Person2Address2> getAssociations() {
+    public Set<Person2Address2> getAssociations() {
         return associations;
     }
 
-    public void setAssociations(List<Person2Address2> associations) {
+    public void setAssociations(Set<Person2Address2> associations) {
         this.associations = associations;
     }
 }

@@ -1,20 +1,28 @@
 package com.example.demo.m2m.split.separate;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
-@Entity
+/**
+ * split many-to-many => 2 one-to-many with JoinEntity
+ *
+ * Person, Address and JoinEntity (Owner side)
+ *
+ */
+
+@Entity @Getter @Setter
 public class Person2Address2 implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Person2 person;
-
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Address2 address;
@@ -34,15 +42,27 @@ public class Person2Address2 implements Serializable {
         if (this == o) {
             return true;
         }
-        if (person==null || address==null || o == null || getClass() != o.getClass()) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (person.getId()==null || address.getId()==null) {
-            return false;
-        }
+//        if (person==null || address==null || person.getId()==null || address.getId()==null) {
+//            return false;
+//        }
         Person2Address2 that = (Person2Address2) o;
-        return Objects.equals(person.getId(), that.person.getId()) &&
-                Objects.equals(address.getId(), that.address.getId());
+        return getId()!=null && getId().equals(that.getId());
+//        return Objects.equals(person.getId(), that.person.getId()) &&
+//                Objects.equals(address.getId(), that.address.getId());
+    }
+
+    public boolean equalValue(Person2Address2 o) {
+        if (this == o) {
+            return true;
+        }
+        if (person==null || address==null || o.person==null || o.address==null) {
+            return false;
+        }
+        return Objects.equals(person.getId(), o.person.getId()) &&
+                Objects.equals(address.getId(), o.address.getId());
     }
 
     @Override
@@ -50,21 +70,7 @@ public class Person2Address2 implements Serializable {
         return Objects.hash(getClass());
     }
 
-    public Person2 getPerson() {
-        return person;
-    }
 
-    public void setPerson(Person2 person) {
-        this.person = person;
-    }
-
-    public Address2 getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address2 address) {
-        this.address = address;
-    }
 
     @Override
     public String toString() {

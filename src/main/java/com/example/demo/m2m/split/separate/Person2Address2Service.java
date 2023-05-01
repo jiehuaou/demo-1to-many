@@ -18,6 +18,11 @@ public class Person2Address2Service {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
+    public void deletePerson(Person2 person) {
+        personStore.delete(person);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
     public Address2 saveAddress(Address2 address) {
         return addressStore.save(address);
     }

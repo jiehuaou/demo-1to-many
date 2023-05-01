@@ -4,11 +4,15 @@ import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * split many-to-many => 2 one-to-many with JoinEntity
+ *
+ * Person, Address and JoinEntity  (Owner side)
+ *
+ */
 @Entity()
 public class Person2 implements Serializable {
     @Id
@@ -23,7 +27,7 @@ public class Person2 implements Serializable {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true
     )
-    private List<Person2Address2> associations = new ArrayList<>();
+    private Set<Person2Address2> associations = new HashSet<>();
 
     public Person2() {
     }
@@ -41,13 +45,18 @@ public class Person2 implements Serializable {
     }
 
     public void removeAddress(Address2 address) {
-        Objects.requireNonNull(address);
-        Objects.requireNonNull(address.getId());
+        Objects.requireNonNull(address);   Objects.requireNonNull(address.getId());
+        //------
         Person2Address2 personAddress = new Person2Address2(this, address);
-        this.associations.remove(personAddress);
-        address.getAssociations().remove(personAddress);
-        personAddress.setPerson(null);
-        personAddress.setAddress(null);
+        this.associations.removeIf(e->e.equalValue(personAddress));
+        address.getAssociations().removeIf(e->e.equalValue(personAddress));
+//        personAddress.setPerson(null);
+//        personAddress.setAddress(null);
+    }
+
+    private void setRefEmpty(Person2Address2 person2Address2) {
+        person2Address2.setPerson(null);
+        person2Address2.setAddress(null);
     }
 
     @Override
@@ -98,11 +107,11 @@ public class Person2 implements Serializable {
         this.registrationNumber = registrationNumber;
     }
 
-    public List<Person2Address2> getAssociations() {
+    public Set<Person2Address2> getAssociations() {
         return associations;
     }
 
-    public void setAssociations(List<Person2Address2> associations) {
+    public void setAssociations(Set<Person2Address2> associations) {
         this.associations = associations;
     }
 }
