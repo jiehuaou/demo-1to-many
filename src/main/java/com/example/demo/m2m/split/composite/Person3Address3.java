@@ -5,11 +5,16 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * split many-to-many => 2 one-to-many with Composite Key
+ *
+ * Person, Address and JoinEntity (Composite Key)  (Owner side)
+ */
 @Entity
 public class Person3Address3 implements Serializable {
 
     @EmbeddedId
-    private PersonAddressKey personAddressKey;
+    private Person3Address3Key personAddressKey;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @MapsId("personId")
@@ -26,7 +31,7 @@ public class Person3Address3 implements Serializable {
     }
 
     public Person3Address3(Person3 person, Address3 address) {
-        this.personAddressKey = new PersonAddressKey(person.getId(), address.getId());
+        this.personAddressKey = new Person3Address3Key(person.getId(), address.getId());
         this.person = person;
         this.address = address;
     }
@@ -45,8 +50,8 @@ public class Person3Address3 implements Serializable {
             return false;
         }
         Person3Address3 that = (Person3Address3) o;
-        return Objects.equals(person.getId(), that.person.getId()) &&
-                Objects.equals(address.getId(), that.address.getId());
+        return person.getId().equals(that.person.getId()) &&
+                address.getId().equals(that.address.getId());
     }
 
     @Override

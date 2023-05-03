@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Embeddable
-public class PersonAddressKey implements Serializable {
+public class Person3Address3Key implements Serializable {
     @Column(name = "person_id")
     private Long personId;
     @Column(name = "address_id")

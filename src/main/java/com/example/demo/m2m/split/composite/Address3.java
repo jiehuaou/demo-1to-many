@@ -5,7 +5,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
+/**
+ * split many-to-many => 2 one-to-many with Composite Key
+ *
+ * Person, Address and JoinEntity (Composite Key)  (Owner side)
+ *
+ */
 @Entity
 public class Address3 implements Serializable {
     @Id
@@ -20,11 +27,11 @@ public class Address3 implements Serializable {
     private String postalCode;
 
     @OneToMany(
-            mappedBy = "address",
+            mappedBy = "address", fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true
     )
-    private List<Person3Address3> persons = new ArrayList<>();
+    private List<Person3Address3> associations = new ArrayList<>();
 
     public Address3() {
     }
@@ -91,21 +98,21 @@ public class Address3 implements Serializable {
 
     public void addPerson(Person3 person) {
         Person3Address3 personAddress = new Person3Address3(person,this);
-        persons.add(personAddress);
-        person.getAddresses().add(personAddress);
+        associations.add(personAddress);
+        person.getAssociations().add(personAddress);
     }
 
     public void removePerson(Person3 person) {
-     //   PersonAddress personAddress = new PersonAddress(person, this);
-//        address.getOwners().remove(personAddress);
-//        addresses.remove(personAddress);
+        Person3Address3 personAddress = new Person3Address3(person, this);
+        person.getAssociations().remove(personAddress);
+        associations.remove(personAddress);
 //        personAddress.setPerson(null);
 //        personAddress.setAddress(null);
     }
 
     @Override
     public String toString() {
-        return "Address3{" +
+        return "Address3 {" +
                 "id=" + id +
                 ", street='" + street + '\'' +
                 ", number='" + number + '\'' +
@@ -113,11 +120,28 @@ public class Address3 implements Serializable {
                 '}';
     }
 
-    public List<Person3Address3> getPersons() {
-        return persons;
+    public String toLongString() {
+        return "Address3 {" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", number='" + number + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", persons='" + joinPerson() + '\'' +
+                '}';
     }
 
-    public void setPersons(List<Person3Address3> persons) {
-        this.persons = persons;
+    private List<String> joinPerson() {
+        return associations.stream()
+                .map(e->e.getPerson())
+                .map(e->e.toShortString())
+                .collect(Collectors.toList());
+    }
+
+    public List<Person3Address3> getAssociations() {
+        return associations;
+    }
+
+    public void setAssociations(List<Person3Address3> associations) {
+        this.associations = associations;
     }
 }

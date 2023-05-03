@@ -9,7 +9,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Entity()
+/**
+ * split many-to-many => 2 one-to-many with Composite Key
+ *
+ * Person, Address and JoinEntity (Composite Key)  (Owner side)
+ *
+ */
+@Entity
 public class Person3 implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +25,11 @@ public class Person3 implements Serializable {
     private String registrationNumber;
 
     @OneToMany(
-            mappedBy = "person",
+            mappedBy = "person", fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true
     )
-    private List<Person3Address3> addresses = new ArrayList<>();
+    private List<Person3Address3> associations = new ArrayList<>();
 
     public Person3() {
     }
@@ -35,18 +41,16 @@ public class Person3 implements Serializable {
     //Getters and setters are omitted for brevity
 
     public void addAddress(Address3 address) {
-//        PersonAddress personAddress = new PersonAddress(this, address);
-//        //addresses.stream().filter(e->e.)
-//        addresses.add(personAddress);
-//        address.getPersons().add(personAddress);
+        Person3Address3 personAddress = new Person3Address3(this, address);
+        associations.add(personAddress);
+        address.getAssociations().add(personAddress);
     }
 
     public void removeAddress(Address3 address) {
-//        PersonAddress personAddress = new PersonAddress(this, address);
-//        address.getPersons().remove(personAddress);
-//        addresses.remove(personAddress);
-//        personAddress.setPerson(null);
-//        personAddress.setAddress(null);
+        Person3Address3 personAddress = new Person3Address3(this, address);
+        address.getAssociations().remove(personAddress);
+        associations.remove(personAddress);
+
     }
 
     @Override
@@ -68,15 +72,22 @@ public class Person3 implements Serializable {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Person3 {" +
                 "id=" + id +
                 ", registrationNumber='" + registrationNumber + '\'' +
-                ", addresses=" + joinAddress() +
+                ", associations=" + joinAddress() +
+                '}';
+    }
+
+    public String toShortString() {
+        return "Person3 {" +
+                "id=" + id +
+                ", registrationNumber='" + registrationNumber + '\'' +
                 '}';
     }
 
     private List<Address3> joinAddress() {
-        return this.addresses.stream()
+        return this.associations.stream()
                 .map(e->e.getAddress())
                 .collect(Collectors.toList());
     }
@@ -97,11 +108,11 @@ public class Person3 implements Serializable {
         this.registrationNumber = registrationNumber;
     }
 
-    public List<Person3Address3> getAddresses() {
-        return addresses;
+    public List<Person3Address3> getAssociations() {
+        return associations;
     }
 
-    public void setAddresses(List<Person3Address3> addresses) {
-        this.addresses = addresses;
+    public void setAssociations(List<Person3Address3> associations) {
+        this.associations = associations;
     }
 }
