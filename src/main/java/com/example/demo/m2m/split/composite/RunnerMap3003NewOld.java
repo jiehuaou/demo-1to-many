@@ -48,7 +48,7 @@ public class RunnerMap3003NewOld implements CommandLineRunner {
     }
 
 
-    private void map_new_address_with_existing_person() {
+    public void map_new_address_with_existing_person() {
         Address3 a3 = new Address3("street-999", "999", "code-999");
         service.mapNewAddressWithPerson(a3, "x002");
         log.info("================== ");

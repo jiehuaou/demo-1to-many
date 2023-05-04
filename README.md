@@ -492,3 +492,19 @@ correct state to write to the database.
 
 **Solution** : within a transaction, fetch the entity, make changes, and commit the transaction.
 
+# Composite key: @Embeddable vs @IdClass
+
+Composite key definition affects queries more than we might expect. 
+
+In most cases @EmbeddedId approach gives us a clear picture and better understanding of an entity’s structure. 
+We can see the entity’s primary key, and **Hibernate generates optimized queries**, considering the entity structure.
+
+### @Embeddable: 
+* the query method is a bit more complex.
+* Hibernate generates optimized queries.
+
+### @IdClass:
+* the query method is a very simple.
+
+@Embeddable option looks preferable;
+

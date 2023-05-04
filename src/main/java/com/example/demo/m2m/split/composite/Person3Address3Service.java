@@ -27,6 +27,11 @@ public class Person3Address3Service {
         person3Store.save(p1);
         log.info("======== Transaction End ========== ");
     }
+
+    /**
+     * find Entity and create Entity, Must happen inside Transaction，
+     * Or otherwise "detached entity passed to persist"
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public void mapNewAddressWithPerson(Address3 a3, String registrationNumber) {
         Person3 p1 = person3Store.findByRegistrationNumber(registrationNumber);
@@ -34,6 +39,11 @@ public class Person3Address3Service {
         address3Store.save(a3);
         log.info("======== Transaction End ========== ");
     }
+
+    /**
+     * find Entity and create Entity, Must happen inside Transaction，
+     * Or otherwise "detached entity passed to persist"
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public Address3 saveAddress(Address3 address) {
         return address3Store.save(address);
