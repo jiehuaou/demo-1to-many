@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Order(3060)
 @Component("RunnerQuery3060")
-public class RunnerQuery3060 implements CommandLineRunner {
+public class Runner3060Query implements CommandLineRunner {
 
     @Autowired
     private EntityManager entityManager;

@@ -17,7 +17,7 @@ import javax.persistence.EntityManager;
 @Slf4j
 @Order(3002)
 @Component("RunnerMap3002Remove")
-public class RunnerMap3002Remove implements CommandLineRunner {
+public class Runner3002MapRemove implements CommandLineRunner {
 
     @Autowired
     private EntityManager entityManager;

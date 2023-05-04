@@ -17,7 +17,7 @@ import javax.persistence.EntityManager;
 @Slf4j
 @Order(3075)
 @Component("RunnerDeletion3075")
-public class RunnerDeletion3075 implements CommandLineRunner {
+public class Runner3075Deletion implements CommandLineRunner {
 
     @Autowired
     private EntityManager entityManager;
